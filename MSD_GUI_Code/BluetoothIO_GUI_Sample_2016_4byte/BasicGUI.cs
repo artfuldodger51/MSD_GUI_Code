@@ -26,6 +26,8 @@ namespace BluetoothGUISample
         double TotalTicks = 0;
         int Diff = 0;
         double time = 0;
+        double error = 0;
+        int BitVal1 = 0;
 
         // Circumference of Decoder DIsc
         // 
@@ -74,10 +76,31 @@ namespace BluetoothGUISample
 
         private void button2_Click(object sender, EventArgs e) //Press the button to send the value to Output 1, Arduino Port A.
         {
-            SendIO(2, (byte)BitValue1.Value); // The value 1 indicates troubleshooting box 1.
+            if (DeadbandBox.Checked == true)
+            {
+                if (BitValue1.Value < 150 & BitValue1.Value > 127)
+                {
+                    BitVal1 = 150;
+                    SendIO(2, (byte)BitVal1); // The value 1 indicates troubleshooting box 1.}
+                }
+                else if (BitValue1.Value < 127 & BitValue1.Value > 107)
+                {
+                    BitVal1 = 107;
+                    SendIO(2, (byte)BitVal1); // The value 1 indicates troubleshooting box 1.}
+                }
+                
+                else 
+                {
+                    SendIO(2, (byte)BitValue1.Value); // The value 1 indicates troubleshooting box 1.
+                }
+            }
+
+            else if (DeadbandBox.Checked == false)
+            {
+                SendIO(2, (byte)BitValue1.Value); // The value 1 indicates troubleshooting box 1.}
+            }
+
         }
-        
-        
         // Distance Changer Button
         private void PosButton_Click(object sender, EventArgs e) //Press the button to send the value to Output 1, Arduino Port A.
         {
@@ -112,27 +135,8 @@ namespace BluetoothGUISample
             if (bluetooth.IsOpen) //Check that a serial connection exists.
             {
 
-                //-----------------------------------------------------------------------------------------------------------
-                //
-                //
-                //
-                //  READ FROM DECODER
-                //
-                //
-                //-----------------------------------------------------------------------------------------------------------
 
-                //-----------------------------------------------------------------------------------------------------------
-                //
-                //
-                //
-                //  PID CONTROL
-                //
-                //
-                //
-                //-----------------------------------------------------------------------------------------------------------
-
-
-                // READ DATA TO THE ARDUINO
+                // READ DATA FROM THE ARDUINO
                 //-----------------------------------------------------------------------------------------------------------
                 if (bluetooth.BytesToRead >= 4) //Check that the buffer contains a full four byte package.
                 {
@@ -144,12 +148,13 @@ namespace BluetoothGUISample
 
                         //Read the rest of the package.
                         Inputs[1] = (byte)bluetooth.ReadByte();
-                        Inputs[2] = (byte)bluetooth.ReadByte(); // Data byte
+                        Inputs[2] = (byte)bluetooth.ReadByte(); // Data byte (The byte thats useful)
                         Inputs[3] = (byte)bluetooth.ReadByte();
 
 
                         DecTickNew = Inputs[2];
                         Diff = DecTickNew - DecTickOld;
+
 
                         if (Diff > 30000)
                         { Diff = -1; }
@@ -159,9 +164,11 @@ namespace BluetoothGUISample
 
                         DecTickOld = DecTickNew;
                         TotalTicks =+ Diff;
+                        TotalTicksBox.Text = TotalTicks.ToString();
 
 
                         //Print to Position Graph
+                        textBox4.Text = (Math.Abs(0.039885 * TotalTicks) + Math.Sin(2)).ToString();
                         PositionGraph.Series[0].Points.AddXY(time, PositionGraphCalc(TotalTicks));
                         PositionGraph.Series[0].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
 
@@ -185,6 +192,24 @@ namespace BluetoothGUISample
                         }
                     }
                 }
+
+                //-----------------------------------------------------------------------------------------------------------
+                //
+                //
+                //
+                //  PID CONTROL
+                //  u = K_p x e + K_i x (integral of e) + K_d x (derivative of e)
+
+                //  Proportional Control
+                // 
+
+
+                //
+                //
+                //
+                //-----------------------------------------------------------------------------------------------------------
+
+
                 //-----------------------------------------------------------------------------------------------------------
 
             }
@@ -193,6 +218,7 @@ namespace BluetoothGUISample
         double PositionGraphCalc(double x)
         {
             return (Math.Abs(0.039885*x)+Math.Sin(2));
+            
         }
 
         private void Form1_Load(object sender, EventArgs e)
