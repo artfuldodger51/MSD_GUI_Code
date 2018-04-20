@@ -29,15 +29,15 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea10 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend10 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series10 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea11 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend11 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series11 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea12 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend12 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series12 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.bluetooth = new System.IO.Ports.SerialPort(this.components);
             this.getIOtimer = new System.Windows.Forms.Timer(this.components);
             this.NextPos = new System.Windows.Forms.NumericUpDown();
@@ -67,6 +67,7 @@
             this.TotalTicksBox = new System.Windows.Forms.TextBox();
             this.button2 = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
+            this.TotalTicksLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.NextPos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NextVel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NextAcc)).BeginInit();
@@ -226,48 +227,48 @@
             // 
             // PositionGraph
             // 
-            chartArea10.Name = "ChartArea1";
-            this.PositionGraph.ChartAreas.Add(chartArea10);
-            legend10.Name = "Legend1";
-            this.PositionGraph.Legends.Add(legend10);
+            chartArea4.Name = "ChartArea1";
+            this.PositionGraph.ChartAreas.Add(chartArea4);
+            legend4.Name = "Legend1";
+            this.PositionGraph.Legends.Add(legend4);
             this.PositionGraph.Location = new System.Drawing.Point(1083, 48);
             this.PositionGraph.Name = "PositionGraph";
-            series10.ChartArea = "ChartArea1";
-            series10.Legend = "Legend1";
-            series10.Name = "Series1";
-            this.PositionGraph.Series.Add(series10);
+            series4.ChartArea = "ChartArea1";
+            series4.Legend = "Legend1";
+            series4.Name = "Series1";
+            this.PositionGraph.Series.Add(series4);
             this.PositionGraph.Size = new System.Drawing.Size(500, 400);
             this.PositionGraph.TabIndex = 16;
             this.PositionGraph.Text = "chart1";
             // 
             // VelocityGraph
             // 
-            chartArea11.Name = "ChartArea1";
-            this.VelocityGraph.ChartAreas.Add(chartArea11);
-            legend11.Name = "Legend1";
-            this.VelocityGraph.Legends.Add(legend11);
+            chartArea5.Name = "ChartArea1";
+            this.VelocityGraph.ChartAreas.Add(chartArea5);
+            legend5.Name = "Legend1";
+            this.VelocityGraph.Legends.Add(legend5);
             this.VelocityGraph.Location = new System.Drawing.Point(1093, 555);
             this.VelocityGraph.Name = "VelocityGraph";
-            series11.ChartArea = "ChartArea1";
-            series11.Legend = "Legend1";
-            series11.Name = "Series1";
-            this.VelocityGraph.Series.Add(series11);
+            series5.ChartArea = "ChartArea1";
+            series5.Legend = "Legend1";
+            series5.Name = "Series1";
+            this.VelocityGraph.Series.Add(series5);
             this.VelocityGraph.Size = new System.Drawing.Size(500, 400);
             this.VelocityGraph.TabIndex = 17;
             this.VelocityGraph.Text = "chart2";
             // 
             // chart3
             // 
-            chartArea12.Name = "ChartArea1";
-            this.chart3.ChartAreas.Add(chartArea12);
-            legend12.Name = "Legend1";
-            this.chart3.Legends.Add(legend12);
+            chartArea6.Name = "ChartArea1";
+            this.chart3.ChartAreas.Add(chartArea6);
+            legend6.Name = "Legend1";
+            this.chart3.Legends.Add(legend6);
             this.chart3.Location = new System.Drawing.Point(517, 555);
             this.chart3.Name = "chart3";
-            series12.ChartArea = "ChartArea1";
-            series12.Legend = "Legend1";
-            series12.Name = "Series1";
-            this.chart3.Series.Add(series12);
+            series6.ChartArea = "ChartArea1";
+            series6.Legend = "Legend1";
+            series6.Name = "Series1";
+            this.chart3.Series.Add(series6);
             this.chart3.Size = new System.Drawing.Size(500, 400);
             this.chart3.TabIndex = 18;
             this.chart3.Text = "chart3";
@@ -286,6 +287,7 @@
             // 
             // Troubleshooting
             // 
+            this.Troubleshooting.Controls.Add(this.TotalTicksLabel);
             this.Troubleshooting.Controls.Add(this.DeadbandBox);
             this.Troubleshooting.Controls.Add(this.textBox5);
             this.Troubleshooting.Controls.Add(this.textBox4);
@@ -304,7 +306,7 @@
             // DeadbandBox
             // 
             this.DeadbandBox.AutoSize = true;
-            this.DeadbandBox.Location = new System.Drawing.Point(14, 204);
+            this.DeadbandBox.Location = new System.Drawing.Point(23, 204);
             this.DeadbandBox.Name = "DeadbandBox";
             this.DeadbandBox.Size = new System.Drawing.Size(252, 29);
             this.DeadbandBox.TabIndex = 26;
@@ -336,9 +338,9 @@
             // 
             // TotalTicksBox
             // 
-            this.TotalTicksBox.Location = new System.Drawing.Point(14, 145);
+            this.TotalTicksBox.Location = new System.Drawing.Point(23, 145);
             this.TotalTicksBox.Name = "TotalTicksBox";
-            this.TotalTicksBox.Size = new System.Drawing.Size(151, 31);
+            this.TotalTicksBox.Size = new System.Drawing.Size(137, 31);
             this.TotalTicksBox.TabIndex = 22;
             // 
             // button2
@@ -359,6 +361,15 @@
             this.label7.Size = new System.Drawing.Size(151, 25);
             this.label7.TabIndex = 20;
             this.label7.Text = "Bit Value Input";
+            // 
+            // TotalTicksLabel
+            // 
+            this.TotalTicksLabel.AutoSize = true;
+            this.TotalTicksLabel.Location = new System.Drawing.Point(181, 150);
+            this.TotalTicksLabel.Name = "TotalTicksLabel";
+            this.TotalTicksLabel.Size = new System.Drawing.Size(66, 25);
+            this.TotalTicksLabel.TabIndex = 27;
+            this.TotalTicksLabel.Text = "Blank";
             // 
             // Form1
             // 
@@ -433,6 +444,7 @@
         private System.Windows.Forms.TextBox textBox5;
         private System.Windows.Forms.TextBox textBox4;
         private System.Windows.Forms.CheckBox DeadbandBox;
+        private System.Windows.Forms.Label TotalTicksLabel;
     }
 }
 

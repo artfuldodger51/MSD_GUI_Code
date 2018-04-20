@@ -28,15 +28,20 @@ namespace BluetoothGUISample
         double time = 0;
         double error = 0;
         int BitVal1 = 0;
+        int Lowbyte = 0;
+        int Highbyte = 0;
 
         // Circumference of Decoder DIsc
         // 
 
         byte[] Outputs = new byte[4];
-        byte[] Inputs = new byte[4];
+        byte[] Inputs = new byte[5];
 
         const byte START = 255;
         const byte ZERO = 0;
+
+        private BackgroundWorker myWorker = new BackgroundWorker();
+
 
         public Form1()
         {
@@ -76,6 +81,7 @@ namespace BluetoothGUISample
 
         private void button2_Click(object sender, EventArgs e) //Press the button to send the value to Output 1, Arduino Port A.
         {
+             SendIO(0, 0);
             if (DeadbandBox.Checked == true)
             {
                 if (BitValue1.Value < 150 & BitValue1.Value > 127)
@@ -138,7 +144,7 @@ namespace BluetoothGUISample
 
                 // READ DATA FROM THE ARDUINO
                 //-----------------------------------------------------------------------------------------------------------
-                if (bluetooth.BytesToRead >= 4) //Check that the buffer contains a full four byte package.
+                if (bluetooth.BytesToRead >= 5) //Check that the buffer contains a full four byte package.
                 {
                     Inputs[0] = (byte)bluetooth.ReadByte(); //Read the first byte of the package.
 
@@ -149,23 +155,29 @@ namespace BluetoothGUISample
                         //Read the rest of the package.
                         Inputs[1] = (byte)bluetooth.ReadByte();
                         Inputs[2] = (byte)bluetooth.ReadByte(); // Data byte (The byte thats useful)
-                        Inputs[3] = (byte)bluetooth.ReadByte();
+                        Inputs[3] = (byte)bluetooth.ReadByte(); // Data byte (The byte thats useful)
+                        Inputs[4] = (byte)bluetooth.ReadByte();
+
+                        Lowbyte = Inputs[2];
+                        Highbyte = Inputs[3];
+
+                        DecTickNew = Lowbyte + 256*Highbyte;
 
 
-                        DecTickNew = Inputs[2];
                         Diff = DecTickNew - DecTickOld;
 
 
                         if (Diff > 30000)
-                        { Diff = -1; }
-
-                        else if (Diff < -30000)
                         { Diff = 1; }
 
-                        DecTickOld = DecTickNew;
-                        TotalTicks =+ Diff;
-                        TotalTicksBox.Text = TotalTicks.ToString();
+                        else if (Diff < -30000)
+                        { Diff = -1; }
 
+                        DecTickOld = DecTickNew;
+                        TotalTicks += Diff;
+                        TotalTicksBox.Text = TotalTicks.ToString();
+                        TotalTicksBox.Update(); // Hopefully updates textbox
+                        TotalTicksLabel.Text = TotalTicks.ToString(); // If this works im going to cry
 
                         //Print to Position Graph
                         textBox4.Text = (Math.Abs(0.039885 * TotalTicks) + Math.Sin(2)).ToString();
@@ -176,13 +188,17 @@ namespace BluetoothGUISample
                         byte checkSum = (byte)(Inputs[0] + Inputs[1] + Inputs[2]);
 
                         //Check that the calculated check sum matches the checksum sent with the message.
-                        if (Inputs[3] == checkSum)
+                        if (Inputs[4] == checkSum)
                         {
                             //Check which port the incoming data is associated with.
                             switch (Inputs[1])
                             {
+
                                 case 0: //Save the data to a variable and place in the textbox.
-                                    Input1 = Inputs[2];
+                                    
+
+ 
+
                                     TotalTicksBox.Text = TotalTicks.ToString();
                                     break;
                                 case 1: //Save the data to a variable and place in the textbox. 
@@ -213,6 +229,7 @@ namespace BluetoothGUISample
                 //-----------------------------------------------------------------------------------------------------------
 
             }
+
         }
 
         double PositionGraphCalc(double x)
@@ -237,6 +254,8 @@ namespace BluetoothGUISample
         }
 
 
+
+
     }
-    
+
 }
