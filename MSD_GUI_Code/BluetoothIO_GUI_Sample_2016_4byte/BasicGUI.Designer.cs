@@ -60,6 +60,7 @@
             this.chart3 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.BitValue1 = new System.Windows.Forms.NumericUpDown();
             this.Troubleshooting = new System.Windows.Forms.GroupBox();
+            this.TotalTicksLabel = new System.Windows.Forms.Label();
             this.DeadbandBox = new System.Windows.Forms.CheckBox();
             this.textBox5 = new System.Windows.Forms.TextBox();
             this.textBox4 = new System.Windows.Forms.TextBox();
@@ -67,7 +68,6 @@
             this.TotalTicksBox = new System.Windows.Forms.TextBox();
             this.button2 = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
-            this.TotalTicksLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.NextPos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NextVel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NextAcc)).BeginInit();
@@ -90,138 +90,145 @@
             // 
             // NextPos
             // 
-            this.NextPos.Location = new System.Drawing.Point(83, 115);
-            this.NextPos.Margin = new System.Windows.Forms.Padding(6);
+            this.NextPos.Location = new System.Drawing.Point(42, 60);
             this.NextPos.Maximum = new decimal(new int[] {
             255,
             0,
             0,
             0});
             this.NextPos.Name = "NextPos";
-            this.NextPos.Size = new System.Drawing.Size(250, 31);
+            this.NextPos.Size = new System.Drawing.Size(125, 20);
             this.NextPos.TabIndex = 3;
             // 
             // PosButton
             // 
-            this.PosButton.Location = new System.Drawing.Point(373, 107);
-            this.PosButton.Margin = new System.Windows.Forms.Padding(6);
+            this.PosButton.Location = new System.Drawing.Point(186, 56);
             this.PosButton.Name = "PosButton";
-            this.PosButton.Size = new System.Drawing.Size(255, 44);
+            this.PosButton.Size = new System.Drawing.Size(128, 23);
             this.PosButton.TabIndex = 4;
             this.PosButton.Text = "Change Position";
             this.PosButton.UseVisualStyleBackColor = true;
             // 
             // VelButton
             // 
-            this.VelButton.Location = new System.Drawing.Point(373, 249);
-            this.VelButton.Margin = new System.Windows.Forms.Padding(6);
+            this.VelButton.Location = new System.Drawing.Point(186, 129);
             this.VelButton.Name = "VelButton";
-            this.VelButton.Size = new System.Drawing.Size(255, 44);
+            this.VelButton.Size = new System.Drawing.Size(128, 23);
             this.VelButton.TabIndex = 4;
             this.VelButton.Text = "Change Velocity";
             this.VelButton.UseVisualStyleBackColor = true;
             // 
             // NextVel
             // 
-            this.NextVel.Location = new System.Drawing.Point(83, 257);
-            this.NextVel.Margin = new System.Windows.Forms.Padding(6);
+            this.NextVel.Location = new System.Drawing.Point(42, 134);
             this.NextVel.Maximum = new decimal(new int[] {
             255,
             0,
             0,
             0});
             this.NextVel.Name = "NextVel";
-            this.NextVel.Size = new System.Drawing.Size(250, 31);
+            this.NextVel.Size = new System.Drawing.Size(125, 20);
             this.NextVel.TabIndex = 3;
             // 
             // NextAcc
             // 
-            this.NextAcc.Location = new System.Drawing.Point(83, 391);
+            this.NextAcc.Location = new System.Drawing.Point(42, 203);
+            this.NextAcc.Margin = new System.Windows.Forms.Padding(2);
             this.NextAcc.Name = "NextAcc";
-            this.NextAcc.Size = new System.Drawing.Size(250, 31);
+            this.NextAcc.Size = new System.Drawing.Size(125, 20);
             this.NextAcc.TabIndex = 5;
             // 
             // AccButton
             // 
-            this.AccButton.Location = new System.Drawing.Point(373, 383);
+            this.AccButton.Location = new System.Drawing.Point(186, 199);
+            this.AccButton.Margin = new System.Windows.Forms.Padding(2);
             this.AccButton.Name = "AccButton";
-            this.AccButton.Size = new System.Drawing.Size(255, 44);
+            this.AccButton.Size = new System.Drawing.Size(128, 23);
             this.AccButton.TabIndex = 6;
             this.AccButton.Text = "Change Acceleration";
             this.AccButton.UseVisualStyleBackColor = true;
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(671, 116);
+            this.textBox1.Location = new System.Drawing.Point(336, 60);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(2);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(195, 31);
+            this.textBox1.Size = new System.Drawing.Size(100, 20);
             this.textBox1.TabIndex = 7;
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(671, 257);
+            this.textBox2.Location = new System.Drawing.Point(336, 134);
+            this.textBox2.Margin = new System.Windows.Forms.Padding(2);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(195, 31);
+            this.textBox2.Size = new System.Drawing.Size(100, 20);
             this.textBox2.TabIndex = 8;
             // 
             // textBox3
             // 
-            this.textBox3.Location = new System.Drawing.Point(671, 391);
+            this.textBox3.Location = new System.Drawing.Point(336, 203);
+            this.textBox3.Margin = new System.Windows.Forms.Padding(2);
             this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(195, 31);
+            this.textBox3.Size = new System.Drawing.Size(100, 20);
             this.textBox3.TabIndex = 9;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(671, 88);
+            this.label1.Location = new System.Drawing.Point(336, 46);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(166, 25);
+            this.label1.Size = new System.Drawing.Size(81, 13);
             this.label1.TabIndex = 10;
             this.label1.Text = "Current Position";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(671, 229);
+            this.label2.Location = new System.Drawing.Point(336, 119);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(165, 25);
+            this.label2.Size = new System.Drawing.Size(81, 13);
             this.label2.TabIndex = 11;
             this.label2.Text = "Current Velocity";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(671, 363);
+            this.label3.Location = new System.Drawing.Point(336, 189);
+            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(208, 25);
+            this.label3.Size = new System.Drawing.Size(103, 13);
             this.label3.TabIndex = 12;
             this.label3.Text = "Current Acceleration";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(83, 86);
+            this.label4.Location = new System.Drawing.Point(42, 45);
+            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(139, 25);
+            this.label4.Size = new System.Drawing.Size(69, 13);
             this.label4.TabIndex = 13;
             this.label4.Text = "Next Position";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(83, 227);
+            this.label5.Location = new System.Drawing.Point(42, 118);
+            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(138, 25);
+            this.label5.Size = new System.Drawing.Size(69, 13);
             this.label5.TabIndex = 14;
             this.label5.Text = "Next Velocity";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(88, 361);
+            this.label6.Location = new System.Drawing.Point(44, 188);
+            this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(181, 25);
+            this.label6.Size = new System.Drawing.Size(91, 13);
             this.label6.TabIndex = 15;
             this.label6.Text = "Next Acceleration";
             // 
@@ -231,13 +238,14 @@
             this.PositionGraph.ChartAreas.Add(chartArea4);
             legend4.Name = "Legend1";
             this.PositionGraph.Legends.Add(legend4);
-            this.PositionGraph.Location = new System.Drawing.Point(1083, 48);
+            this.PositionGraph.Location = new System.Drawing.Point(542, 25);
+            this.PositionGraph.Margin = new System.Windows.Forms.Padding(2);
             this.PositionGraph.Name = "PositionGraph";
             series4.ChartArea = "ChartArea1";
             series4.Legend = "Legend1";
             series4.Name = "Series1";
             this.PositionGraph.Series.Add(series4);
-            this.PositionGraph.Size = new System.Drawing.Size(500, 400);
+            this.PositionGraph.Size = new System.Drawing.Size(250, 208);
             this.PositionGraph.TabIndex = 16;
             this.PositionGraph.Text = "chart1";
             // 
@@ -247,13 +255,14 @@
             this.VelocityGraph.ChartAreas.Add(chartArea5);
             legend5.Name = "Legend1";
             this.VelocityGraph.Legends.Add(legend5);
-            this.VelocityGraph.Location = new System.Drawing.Point(1093, 555);
+            this.VelocityGraph.Location = new System.Drawing.Point(546, 289);
+            this.VelocityGraph.Margin = new System.Windows.Forms.Padding(2);
             this.VelocityGraph.Name = "VelocityGraph";
             series5.ChartArea = "ChartArea1";
             series5.Legend = "Legend1";
             series5.Name = "Series1";
             this.VelocityGraph.Series.Add(series5);
-            this.VelocityGraph.Size = new System.Drawing.Size(500, 400);
+            this.VelocityGraph.Size = new System.Drawing.Size(250, 208);
             this.VelocityGraph.TabIndex = 17;
             this.VelocityGraph.Text = "chart2";
             // 
@@ -263,26 +272,28 @@
             this.chart3.ChartAreas.Add(chartArea6);
             legend6.Name = "Legend1";
             this.chart3.Legends.Add(legend6);
-            this.chart3.Location = new System.Drawing.Point(517, 555);
+            this.chart3.Location = new System.Drawing.Point(258, 289);
+            this.chart3.Margin = new System.Windows.Forms.Padding(2);
             this.chart3.Name = "chart3";
             series6.ChartArea = "ChartArea1";
             series6.Legend = "Legend1";
             series6.Name = "Series1";
             this.chart3.Series.Add(series6);
-            this.chart3.Size = new System.Drawing.Size(500, 400);
+            this.chart3.Size = new System.Drawing.Size(250, 208);
             this.chart3.TabIndex = 18;
             this.chart3.Text = "chart3";
             // 
             // BitValue1
             // 
-            this.BitValue1.Location = new System.Drawing.Point(14, 69);
+            this.BitValue1.Location = new System.Drawing.Point(7, 36);
+            this.BitValue1.Margin = new System.Windows.Forms.Padding(2);
             this.BitValue1.Maximum = new decimal(new int[] {
             255,
             0,
             0,
             0});
             this.BitValue1.Name = "BitValue1";
-            this.BitValue1.Size = new System.Drawing.Size(151, 31);
+            this.BitValue1.Size = new System.Drawing.Size(76, 20);
             this.BitValue1.TabIndex = 19;
             // 
             // Troubleshooting
@@ -296,58 +307,76 @@
             this.Troubleshooting.Controls.Add(this.button2);
             this.Troubleshooting.Controls.Add(this.label7);
             this.Troubleshooting.Controls.Add(this.BitValue1);
-            this.Troubleshooting.Location = new System.Drawing.Point(26, 508);
+            this.Troubleshooting.Location = new System.Drawing.Point(13, 264);
+            this.Troubleshooting.Margin = new System.Windows.Forms.Padding(2);
             this.Troubleshooting.Name = "Troubleshooting";
-            this.Troubleshooting.Size = new System.Drawing.Size(346, 447);
+            this.Troubleshooting.Padding = new System.Windows.Forms.Padding(2);
+            this.Troubleshooting.Size = new System.Drawing.Size(173, 232);
             this.Troubleshooting.TabIndex = 21;
             this.Troubleshooting.TabStop = false;
             this.Troubleshooting.Text = "Troubleshooting";
             // 
+            // TotalTicksLabel
+            // 
+            this.TotalTicksLabel.AutoSize = true;
+            this.TotalTicksLabel.Location = new System.Drawing.Point(90, 78);
+            this.TotalTicksLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.TotalTicksLabel.Name = "TotalTicksLabel";
+            this.TotalTicksLabel.Size = new System.Drawing.Size(34, 13);
+            this.TotalTicksLabel.TabIndex = 27;
+            this.TotalTicksLabel.Text = "Blank";
+            // 
             // DeadbandBox
             // 
             this.DeadbandBox.AutoSize = true;
-            this.DeadbandBox.Location = new System.Drawing.Point(23, 204);
+            this.DeadbandBox.Location = new System.Drawing.Point(12, 106);
+            this.DeadbandBox.Margin = new System.Windows.Forms.Padding(2);
             this.DeadbandBox.Name = "DeadbandBox";
-            this.DeadbandBox.Size = new System.Drawing.Size(252, 29);
+            this.DeadbandBox.Size = new System.Drawing.Size(131, 17);
             this.DeadbandBox.TabIndex = 26;
             this.DeadbandBox.Text = "Deadband Removed?";
             this.DeadbandBox.UseVisualStyleBackColor = true;
             // 
             // textBox5
             // 
-            this.textBox5.Location = new System.Drawing.Point(186, 281);
+            this.textBox5.Location = new System.Drawing.Point(93, 146);
+            this.textBox5.Margin = new System.Windows.Forms.Padding(2);
             this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(100, 31);
+            this.textBox5.Size = new System.Drawing.Size(52, 20);
             this.textBox5.TabIndex = 25;
             // 
             // textBox4
             // 
-            this.textBox4.Location = new System.Drawing.Point(19, 281);
+            this.textBox4.Location = new System.Drawing.Point(10, 146);
+            this.textBox4.Margin = new System.Windows.Forms.Padding(2);
             this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(100, 31);
+            this.textBox4.Size = new System.Drawing.Size(52, 20);
             this.textBox4.TabIndex = 24;
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(14, 117);
+            this.label8.Location = new System.Drawing.Point(7, 61);
+            this.label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(117, 25);
+            this.label8.Size = new System.Drawing.Size(60, 13);
             this.label8.TabIndex = 23;
             this.label8.Text = "Total Ticks";
             // 
             // TotalTicksBox
             // 
-            this.TotalTicksBox.Location = new System.Drawing.Point(23, 145);
+            this.TotalTicksBox.Location = new System.Drawing.Point(12, 75);
+            this.TotalTicksBox.Margin = new System.Windows.Forms.Padding(2);
             this.TotalTicksBox.Name = "TotalTicksBox";
-            this.TotalTicksBox.Size = new System.Drawing.Size(137, 31);
+            this.TotalTicksBox.Size = new System.Drawing.Size(70, 20);
             this.TotalTicksBox.TabIndex = 22;
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(186, 64);
+            this.button2.Location = new System.Drawing.Point(93, 33);
+            this.button2.Margin = new System.Windows.Forms.Padding(2);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(136, 42);
+            this.button2.Size = new System.Drawing.Size(68, 22);
             this.button2.TabIndex = 21;
             this.button2.Text = "Send";
             this.button2.UseVisualStyleBackColor = true;
@@ -356,26 +385,18 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(14, 38);
+            this.label7.Location = new System.Drawing.Point(7, 20);
+            this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(151, 25);
+            this.label7.Size = new System.Drawing.Size(76, 13);
             this.label7.TabIndex = 20;
             this.label7.Text = "Bit Value Input";
             // 
-            // TotalTicksLabel
-            // 
-            this.TotalTicksLabel.AutoSize = true;
-            this.TotalTicksLabel.Location = new System.Drawing.Point(181, 150);
-            this.TotalTicksLabel.Name = "TotalTicksLabel";
-            this.TotalTicksLabel.Size = new System.Drawing.Size(66, 25);
-            this.TotalTicksLabel.TabIndex = 27;
-            this.TotalTicksLabel.Text = "Blank";
-            // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1650, 1010);
+            this.ClientSize = new System.Drawing.Size(825, 525);
             this.Controls.Add(this.Troubleshooting);
             this.Controls.Add(this.chart3);
             this.Controls.Add(this.VelocityGraph);
@@ -395,7 +416,6 @@
             this.Controls.Add(this.PosButton);
             this.Controls.Add(this.NextVel);
             this.Controls.Add(this.NextPos);
-            this.Margin = new System.Windows.Forms.Padding(6);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);

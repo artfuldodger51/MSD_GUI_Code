@@ -10,15 +10,20 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Diagnostics;
+using System.Threading;
+
 
 namespace BluetoothGUISample
 {    
 
+    
 
     public partial class Form1 : Form
     {
         // Declare variables to store inputs and outputs.
-        bool runBluetooth = true;
+
+        bool runBluetooth = false;
         int Input1 = 0;
         int Input2 = 0;
         int DecTickNew = 0;
@@ -40,13 +45,25 @@ namespace BluetoothGUISample
         const byte START = 255;
         const byte ZERO = 0;
 
-        private BackgroundWorker myWorker = new BackgroundWorker();
 
 
         public Form1()
         {
+
+
             // Initialize required for form controls.
             InitializeComponent();
+
+
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
+
+            Thread t = new Thread(() => outputTimer(watch, textBox3));          // Kick off a new thread
+            t.IsBackground = true;
+            t.Start();                               // running WriteY()
+ 
+
+
 
             // Establish connection with Bluetooth IOCard
             if (runBluetooth == true)
@@ -62,6 +79,18 @@ namespace BluetoothGUISample
                         
                     }
                 }
+            }
+        }
+
+        private void outputTimer (Stopwatch watch, TextBox textBox)
+        {
+
+            while(true)
+            {
+                textBox.Invalidate();
+                textBox.Text = watch.ElapsedMilliseconds.ToString();
+                
+               // textBox.Update();
             }
         }
 
@@ -252,6 +281,7 @@ namespace BluetoothGUISample
             //    PositionGraph.Series[0].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
             //}
         }
+
 
 
 
