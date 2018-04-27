@@ -10,6 +10,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace BluetoothGUISample
 {    
@@ -30,6 +31,11 @@ namespace BluetoothGUISample
         int BitVal1 = 0;
         int Lowbyte = 0;
         int Highbyte = 0;
+
+        Thread thrtb1;
+        Thread thrtb2;
+        Thread thrtb3;
+
 
         // Circumference of Decoder DIsc
         // 
@@ -63,6 +69,14 @@ namespace BluetoothGUISample
                     }
                 }
             }
+            //thrtb1 = new Thread(Tb1ControlsUpdate);
+            //thrtb1.Start();
+
+            Thread test = new Thread(new ThreadStart(TestThread));
+            test.Start();
+
+
+
         }
 
         // Send a four byte message to the Arduino via serial.
@@ -78,6 +92,8 @@ namespace BluetoothGUISample
                 bluetooth.Write(Outputs, 0, 4);         //Send all four bytes to the IO card.                      
             }
         }
+
+
 
         private void button2_Click(object sender, EventArgs e) //Press the button to send the value to Output 1, Arduino Port A.
         {
@@ -105,6 +121,8 @@ namespace BluetoothGUISample
             {
                 SendIO(2, (byte)BitValue1.Value); // The value 1 indicates troubleshooting box 1.}
             }
+
+
 
         }
         // Distance Changer Button
@@ -140,14 +158,14 @@ namespace BluetoothGUISample
         {
             if (bluetooth.IsOpen) //Check that a serial connection exists.
             {
-
+                
 
                 // READ DATA FROM THE ARDUINO
                 //-----------------------------------------------------------------------------------------------------------
                 if (bluetooth.BytesToRead >= 5) //Check that the buffer contains a full four byte package.
                 {
                     Inputs[0] = (byte)bluetooth.ReadByte(); //Read the first byte of the package.
-
+                    Console.WriteLine("hello");
                     if (Inputs[0] == START) //Check that the first byte is in fact the start byte.
                     {
                         time++;
@@ -162,27 +180,28 @@ namespace BluetoothGUISample
                         Highbyte = Inputs[3];
 
                         DecTickNew = Lowbyte + 256*Highbyte;
+                        Console.WriteLine(DecTickNew.ToString());
 
 
                         Diff = DecTickNew - DecTickOld;
 
 
-                        if (Diff > 30000)
-                        { Diff = 1; }
+                        //if (Diff > 30000)
+                        //{ Diff = 1; }
 
-                        else if (Diff < -30000)
-                        { Diff = -1; }
+                        //else if (Diff < -30000)
+                        //{ Diff = -1; }
 
                         DecTickOld = DecTickNew;
                         TotalTicks += Diff;
-                        TotalTicksBox.Text = TotalTicks.ToString();
-                        TotalTicksBox.Update(); // Hopefully updates textbox
-                        TotalTicksLabel.Text = TotalTicks.ToString(); // If this works im going to cry
+                        //TotalTicksBox.Text = TotalTicks.ToString();
+                        //TotalTicksBox.Update(); // Hopefully updates textbox
+                        //TotalTicksLabel.Text = TotalTicks.ToString(); // If this works im going to cry
 
                         //Print to Position Graph
-                        textBox4.Text = (Math.Abs(0.039885 * TotalTicks) + Math.Sin(2)).ToString();
-                        PositionGraph.Series[0].Points.AddXY(time, PositionGraphCalc(TotalTicks));
-                        PositionGraph.Series[0].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+                        //textBox4.Text = (Math.Abs(0.039885 * TotalTicks) + Math.Sin(2)).ToString();
+                        //PositionGraph.Series[0].Points.AddXY(time, PositionGraphCalc(TotalTicks));
+                        //PositionGraph.Series[0].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
 
                         //Calculate the checksum.
                         byte checkSum = (byte)(Inputs[0] + Inputs[1] + Inputs[2]);
@@ -195,11 +214,8 @@ namespace BluetoothGUISample
                             {
 
                                 case 0: //Save the data to a variable and place in the textbox.
-                                    
 
- 
-
-                                    TotalTicksBox.Text = TotalTicks.ToString();
+                                    //TotalTicksBox.Text = TotalTicks.ToString();
                                     break;
                                 case 1: //Save the data to a variable and place in the textbox. 
                                     Input2 = Inputs[2];
@@ -253,9 +269,56 @@ namespace BluetoothGUISample
             //}
         }
 
+        public delegate void UpdateTextCallback(string message);
+
+
+        private void TestThread()
+        {
+            for (int i = 0; i <= 200000; i++)
+            {
+                Thread.Sleep(100);
+                TotalTicksBox.Invoke(
+                    new UpdateTextCallback(this.UpdateText),
+                    new object[] { DecTickNew.ToString() }
+                );
+            }
+        }
+
+        private void UpdateText(string message)
+        {
+            TotalTicksBox.AppendText(message + "\n");
+        }
 
 
 
+
+
+
+
+        /*public void updateTotalTicksBox(string pText)
+         {
+             TotalTicksBox.AppendText(pText);
+
+         }
+
+
+         public void Tb1ControlsUpdate()
+         {
+             var _updater = new Action<string>(updateTotalTicksBox);
+
+             while (true)
+             {
+
+                 this.Invoke(_updater, TotalTicks.ToString());
+                 Thread.Sleep(100);
+
+             }
+         }*/
+
+        /*private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            thrtb1.Abort();
+        }*/
     }
 
 }
