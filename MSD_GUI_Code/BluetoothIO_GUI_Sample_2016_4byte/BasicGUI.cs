@@ -247,7 +247,25 @@ namespace BluetoothGUISample
 
                 //  Proportional Control
                 // 
+                switch(controlMode)
+                {
+                    case position:
+                        setpoint = box;
+                        current = DecTickNew;
+                        break;
+                    case speed:
 
+
+                // General PID error calcs
+                // error = setpoint - currentValue;
+                // iError = prevError + error;
+                // dError = error - prevError;
+                // 
+                // prevError = error
+                //
+                //
+                // controlAction = Kp * error + Ki * iError + Kd * dError;
+                // SendIO(1, controlAction);  
 
                 //
                 //
