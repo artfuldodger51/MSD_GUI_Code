@@ -103,23 +103,23 @@ namespace BluetoothGUISample
                 if (BitValue1.Value < 150 & BitValue1.Value > 127)
                 {
                     BitVal1 = 150;
-                    SendIO(2, (byte)BitVal1); // The value 1 indicates troubleshooting box 1.}
+                    SendIO(1, (byte)BitVal1); // The value 1 indicates troubleshooting box 1.}
                 }
                 else if (BitValue1.Value < 127 & BitValue1.Value > 107)
                 {
                     BitVal1 = 107;
-                    SendIO(2, (byte)BitVal1); // The value 1 indicates troubleshooting box 1.}
+                    SendIO(1, (byte)BitVal1); // The value 1 indicates troubleshooting box 1.}
                 }
                 
                 else 
                 {
-                    SendIO(2, (byte)BitValue1.Value); // The value 1 indicates troubleshooting box 1.
+                    SendIO(1, (byte)BitValue1.Value); // The value 1 indicates troubleshooting box 1.
                 }
             }
 
             else if (DeadbandBox.Checked == false)
             {
-                SendIO(2, (byte)BitValue1.Value); // The value 1 indicates troubleshooting box 1.}
+                SendIO(1, (byte)BitValue1.Value); // The value 1 indicates troubleshooting box 1.}
             }
 
 
@@ -128,19 +128,19 @@ namespace BluetoothGUISample
         // Distance Changer Button
         private void PosButton_Click(object sender, EventArgs e) //Press the button to send the value to Output 1, Arduino Port A.
         {
-            SendIO(2, (byte)NextPos.Value); // The value 1 indicates troubleshooting box 1.
+            SendIO(1, (byte)NextPos.Value); // The value 1 indicates troubleshooting box 1.
         }
 
         // Velocity Changer Button
         private void VelButton_Click(object sender, EventArgs e) //Press the button to send the value to Output 1, Arduino Port A.
         {
-            SendIO(2, (byte)NextVel.Value); // The value 1 indicates troubleshooting box 1.
+            SendIO(1, (byte)NextVel.Value); // The value 1 indicates troubleshooting box 1.
         }
 
         // Acceleration Changer Button
         private void AccButton_Click(object sender, EventArgs e) //Press the button to send the value to Output 1, Arduino Port A.
         {
-            SendIO(2, (byte)NextAcc.Value); // The value 1 indicates troubleshooting box 1.
+            SendIO(1, (byte)NextAcc.Value); // The value 1 indicates troubleshooting box 1.
         }
 
 
@@ -162,66 +162,54 @@ namespace BluetoothGUISample
 
                 // READ DATA FROM THE ARDUINO
                 //-----------------------------------------------------------------------------------------------------------
-                if (bluetooth.BytesToRead >= 5) //Check that the buffer contains a full four byte package.
+                if (bluetooth.BytesToRead >= 4) //Check that the buffer contains a full four byte package.
                 {
                     Inputs[0] = (byte)bluetooth.ReadByte(); //Read the first byte of the package.
-                    Console.WriteLine("hello");
+
                     if (Inputs[0] == START) //Check that the first byte is in fact the start byte.
                     {
                         time++;
 
                         //Read the rest of the package.
-                        Inputs[1] = (byte)bluetooth.ReadByte();
+                        Inputs[1] = (byte)bluetooth.ReadByte(); // Data byte (The byte thats useful)
                         Inputs[2] = (byte)bluetooth.ReadByte(); // Data byte (The byte thats useful)
-                        Inputs[3] = (byte)bluetooth.ReadByte(); // Data byte (The byte thats useful)
-                        Inputs[4] = (byte)bluetooth.ReadByte();
-
-                        Lowbyte = Inputs[2];
-                        Highbyte = Inputs[3];
-
-                        DecTickNew = Lowbyte + 256*Highbyte;
-                        Console.WriteLine(DecTickNew.ToString());
-
-
-                        Diff = DecTickNew - DecTickOld;
-
-
-                        //if (Diff > 30000)
-                        //{ Diff = 1; }
-
-                        //else if (Diff < -30000)
-                        //{ Diff = -1; }
-
-                        DecTickOld = DecTickNew;
-                        TotalTicks += Diff;
-                        //TotalTicksBox.Text = TotalTicks.ToString();
-                        //TotalTicksBox.Update(); // Hopefully updates textbox
-                        //TotalTicksLabel.Text = TotalTicks.ToString(); // If this works im going to cry
-
-                        //Print to Position Graph
-                        //textBox4.Text = (Math.Abs(0.039885 * TotalTicks) + Math.Sin(2)).ToString();
-                        //PositionGraph.Series[0].Points.AddXY(time, PositionGraphCalc(TotalTicks));
-                        //PositionGraph.Series[0].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+                        Inputs[3] = (byte)bluetooth.ReadByte(); 
 
                         //Calculate the checksum.
                         byte checkSum = (byte)(Inputs[0] + Inputs[1] + Inputs[2]);
 
-                        //Check that the calculated check sum matches the checksum sent with the message.
-                        if (Inputs[4] == checkSum)
+                        if (Inputs[3] == checkSum)
                         {
-                            //Check which port the incoming data is associated with.
-                            switch (Inputs[1])
-                            {
+                            Lowbyte = Inputs[1];
+                            Highbyte = Inputs[2];
 
-                                case 0: //Save the data to a variable and place in the textbox.
+                            DecTickNew = Lowbyte + 256*Highbyte;
+                            Console.WriteLine(DecTickNew.ToString());
 
-                                    //TotalTicksBox.Text = TotalTicks.ToString();
-                                    break;
-                                case 1: //Save the data to a variable and place in the textbox. 
-                                    Input2 = Inputs[2];
-                                    break;
-                            }
+
+                            Diff = DecTickNew - DecTickOld;
+
+
+                            //if (Diff > 30000)
+                            //{ Diff = 1; }
+
+                            //else if (Diff < -30000)
+                            //{ Diff = -1; }
+
+                            DecTickOld = DecTickNew;
+                            TotalTicks += Diff;
+                            //TotalTicksBox.Text = TotalTicks.ToString();
+                            //TotalTicksBox.Update(); // Hopefully updates textbox
+                            //TotalTicksLabel.Text = TotalTicks.ToString(); // If this works im going to cry
+
+                            //Print to Position Graph
+                            //textBox4.Text = (Math.Abs(0.039885 * TotalTicks) + Math.Sin(2)).ToString();
+                            //PositionGraph.Series[0].Points.AddXY(time, PositionGraphCalc(TotalTicks));
+                            //PositionGraph.Series[0].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+
+
                         }
+
                     }
                 }
 
