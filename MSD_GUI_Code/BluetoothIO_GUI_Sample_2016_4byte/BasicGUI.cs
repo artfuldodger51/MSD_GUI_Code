@@ -31,7 +31,6 @@ namespace BluetoothGUISample
         double TotalTicks = 0;
         int Diff = 0;
         double time = 0;
-        double error = 0;
         int BitVal1 = 0;
         int Lowbyte = 0;
         int Highbyte = 0;
@@ -45,7 +44,29 @@ namespace BluetoothGUISample
         const byte START = 255;
         const byte ZERO = 0;
 
+        int controlMode = 0; // 0-no control, 1-open loop, 2-closed loop
 
+        const int noControl = 0;
+        const int openLoop = 1;
+        const int closedLoop = 2;
+
+        int PIDMode = 0;
+        const int position = 0;
+        const int velocity = 1;
+        const int acceleration = 2;
+
+        // PID variables
+        int setpoint = 0;
+        int error = 0;
+        int iError = 0;
+        int dError = 0;
+        int prevError = 0;
+
+        float Kp = 0;
+        float Ki = 0;
+        float Kd = 0;
+
+        byte controlAction = 0;
 
         public Form1()
         {
@@ -58,9 +79,9 @@ namespace BluetoothGUISample
             Stopwatch watch = new Stopwatch();
             watch.Start();
 
-            Thread t = new Thread(() => outputTimer(watch, textBox3));          // Kick off a new thread
-            t.IsBackground = true;
-            t.Start();                               // running WriteY()
+           // Thread t = new Thread(() => outputTimer(watch, textBox3));          // Kick off a new thread
+            //t.IsBackground = true;
+           // t.Start();                               // running WriteY()
  
 
 
@@ -81,7 +102,7 @@ namespace BluetoothGUISample
                 }
             }
         }
-
+        /*
         private void outputTimer (Stopwatch watch, TextBox textBox)
         {
 
@@ -93,7 +114,7 @@ namespace BluetoothGUISample
                // textBox.Update();
             }
         }
-
+        */
         // Send a four byte message to the Arduino via serial.
         private void SendIO(byte PORT, byte DATA)
         {
@@ -247,37 +268,55 @@ namespace BluetoothGUISample
 
                 //  Proportional Control
                 // 
-               /* switch (controlMode)
+
+
+                
+                switch (controlMode)
                 {
-                    case position:
-                        setpoint = box;
-                        current = DecTickNew;
-                        break;
-                    case speed:
+                    case openLoop:
+
+                    case closedLoop:
+                        switch (PIDMode)
+                        {
+                            case position:
+                                // setpoint = box value
+                                // error = setpoint - currentCountVal
+                                break;
+
+                            case velocity:
+                                //setpoint = box;
+                                //current = DecTickNew;
+                                break;
+
+                            case acceleration:
+                                break;
 
 
+  
+                        }
                         // General PID error calcs
-                        // error = setpoint - currentValue;
-                        // iError = prevError + error;
-                        // dError = error - prevError;
+                        error = setpoint - current;
+                        iError = prevError + error;
+                        dError = error - prevError;
                         // 
-                        // prevError = error
+                        prevError = error;
                         //
                         //
-                        // controlAction = Kp * error + Ki * iError + Kd * dError;
-                        // SendIO(1, controlAction);  
+                        controlAction = (byte)(Kp * error + Ki * iError + Kd * dError);
+                        SendIO(1, controlAction);
 
-                        //
-                        //
-                        //
-                        //-----------------------------------------------------------------------------------------------------------
+                        break;
+                    default:
+                        break;
 
+                }
 
-                        //-----------------------------------------------------------------------------------------------------------
-                }*/ 
             }
 
-        }
+         }
+                
+
+        
 
         double PositionGraphCalc(double x)
         {
@@ -301,9 +340,64 @@ namespace BluetoothGUISample
         }
 
 
+        // Set contol mode for the motor
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (comboBox1.ToString())
+            {
+                case "No Control":
+                    controlMode = noControl;
+                    break;
+                case "Manual Motor Speed":
+                    controlMode = openLoop;
+                    break;
+                case "Deadband Testing":
+                    break;
+                case "Positional Control":
+                    controlMode = closedLoop;
+                    break;
+
+            }
+        }
 
 
+        // These 3 radio buttons select the PID control mode. Only 1 may be selected at a time. 
+        private void PosRadio_CheckedChanged(object sender, EventArgs e)
+        {
+            RadioButton rb = sender as RadioButton;
+            if (rb != null)
+            {
+                if (rb.Checked)
+                {
+                    PIDMode = position;
+                }
+            }
+        }
 
+        private void VelRadio_CheckedChanged(object sender, EventArgs e)
+        {
+            RadioButton rb = sender as RadioButton;
+            if (rb != null)
+            {
+                if (rb.Checked)
+                {
+                    PIDMode = velocity;
+                }
+            }
+
+        }
+
+        private void AccRadio_CheckedChanged(object sender, EventArgs e)
+        {
+            RadioButton rb = sender as RadioButton;
+            if (rb != null)
+            {
+                if (rb.Checked)
+                {
+                    PIDMode = acceleration;
+                }
+            }
+        }
     }
 
 }
