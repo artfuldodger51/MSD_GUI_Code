@@ -56,7 +56,11 @@ namespace BluetoothGUISample
         const int acceleration = 2;
 
         // PID variables
-        int setpoint = 0;
+        float posSet = 0;
+        float velSet = 0;
+        float accSet = 0;
+        float setpoint = 0;
+
         int error = 0;
         int iError = 0;
         int dError = 0;
@@ -67,6 +71,7 @@ namespace BluetoothGUISample
         float Kd = 0;
 
         byte controlAction = 0;
+        byte OLSpeed = 0;
 
         public Form1()
         {
@@ -273,14 +278,17 @@ namespace BluetoothGUISample
                 
                 switch (controlMode)
                 {
+                    case noControl:
+                        controlAction = 127;
                     case openLoop:
-
+                        controlAction = OLSpeed;
+                        break;
                     case closedLoop:
                         switch (PIDMode)
                         {
                             case position:
-                                // setpoint = box value
-                                // error = setpoint - currentCountVal
+                                setpoint = posSet;
+                                //error = setpoint - currentCountVal
                                 break;
 
                             case velocity:
@@ -295,7 +303,7 @@ namespace BluetoothGUISample
   
                         }
                         // General PID error calcs
-                        error = setpoint - current;
+                        //error = setpoint - current;
                         iError = prevError + error;
                         dError = error - prevError;
                         // 
@@ -303,13 +311,14 @@ namespace BluetoothGUISample
                         //
                         //
                         controlAction = (byte)(Kp * error + Ki * iError + Kd * dError);
-                        SendIO(1, controlAction);
+                        
 
                         break;
                     default:
                         break;
 
                 }
+                SendIO(1, controlAction);
 
             }
 
@@ -397,6 +406,56 @@ namespace BluetoothGUISample
                     PIDMode = acceleration;
                 }
             }
+        }
+
+        private void KPButt_Click(object sender, EventArgs e)
+        {
+            Kp = (float)KdRoll.Value;
+        }
+
+        private void KIButt_Click(object sender, EventArgs e)
+        {
+            Ki = (float)KIRoll.Value;
+        }
+
+        private void KDButt_Click(object sender, EventArgs e)
+        {
+            Kd = (float)KdRoll.Value;
+        }
+
+        private void KPRoll_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void PosButton_Click_1(object sender, EventArgs e)
+        {
+            if (PosRadio.Checked == true)
+                posSet = (float)NextPos.Value;
+        }
+
+        private void VelButton_Click_1(object sender, EventArgs e)
+        {
+            if (VelRadio.Checked == true)
+                velSet = (float)NextVel.Value;
+        }
+
+        private void AccButton_Click_1(object sender, EventArgs e)
+        {
+            if (AccRadio.Checked == true)
+                accSet = (float)NextAcc.Value;
+        }
+
+        private void OLSpeedSlide_Scroll(object sender, EventArgs e)
+        {
+            OLSpeedRoll.Value = OLSpeedSlide.Value;
+            OLSpeed = (byte)((OLSpeedRoll.Value + 100) / 200 * 255);
+        }
+
+        private void OLSpeedRoll_ValueChanged(object sender, EventArgs e)
+        {
+            OLSpeedSlide.Value = (int)OLSpeedRoll.Value;
+            OLSpeed = (byte)((OLSpeedSlide.Value + 100) / 200 * 255);
         }
     }
 

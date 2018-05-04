@@ -29,15 +29,15 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea7 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend7 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea8 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend8 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea9 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend9 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series9 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.bluetooth = new System.IO.Ports.SerialPort(this.components);
             this.getIOtimer = new System.Windows.Forms.Timer(this.components);
             this.NextPos = new System.Windows.Forms.NumericUpDown();
@@ -119,7 +119,7 @@
             // 
             // bluetooth
             // 
-            this.bluetooth.PortName = "COM5";
+            this.bluetooth.PortName = "COM58";
             // 
             // getIOtimer
             // 
@@ -146,6 +146,7 @@
             this.PosButton.TabIndex = 4;
             this.PosButton.Text = "Change Position";
             this.PosButton.UseVisualStyleBackColor = true;
+            this.PosButton.Click += new System.EventHandler(this.PosButton_Click_1);
             // 
             // VelButton
             // 
@@ -155,6 +156,7 @@
             this.VelButton.TabIndex = 4;
             this.VelButton.Text = "Change Velocity";
             this.VelButton.UseVisualStyleBackColor = true;
+            this.VelButton.Click += new System.EventHandler(this.VelButton_Click_1);
             // 
             // NextVel
             // 
@@ -185,6 +187,7 @@
             this.AccButton.TabIndex = 6;
             this.AccButton.Text = "Change Acceleration";
             this.AccButton.UseVisualStyleBackColor = true;
+            this.AccButton.Click += new System.EventHandler(this.AccButton_Click_1);
             // 
             // PosRad
             // 
@@ -272,51 +275,51 @@
             // 
             // PositionGraph
             // 
-            chartArea4.Name = "ChartArea1";
-            this.PositionGraph.ChartAreas.Add(chartArea4);
-            legend4.Name = "Legend1";
-            this.PositionGraph.Legends.Add(legend4);
+            chartArea7.Name = "ChartArea1";
+            this.PositionGraph.ChartAreas.Add(chartArea7);
+            legend7.Name = "Legend1";
+            this.PositionGraph.Legends.Add(legend7);
             this.PositionGraph.Location = new System.Drawing.Point(418, 35);
             this.PositionGraph.Margin = new System.Windows.Forms.Padding(2);
             this.PositionGraph.Name = "PositionGraph";
-            series4.ChartArea = "ChartArea1";
-            series4.Legend = "Legend1";
-            series4.Name = "Series1";
-            this.PositionGraph.Series.Add(series4);
+            series7.ChartArea = "ChartArea1";
+            series7.Legend = "Legend1";
+            series7.Name = "Series1";
+            this.PositionGraph.Series.Add(series7);
             this.PositionGraph.Size = new System.Drawing.Size(250, 208);
             this.PositionGraph.TabIndex = 16;
             this.PositionGraph.Text = "chart1";
             // 
             // VelocityGraph
             // 
-            chartArea5.Name = "ChartArea1";
-            this.VelocityGraph.ChartAreas.Add(chartArea5);
-            legend5.Name = "Legend1";
-            this.VelocityGraph.Legends.Add(legend5);
+            chartArea8.Name = "ChartArea1";
+            this.VelocityGraph.ChartAreas.Add(chartArea8);
+            legend8.Name = "Legend1";
+            this.VelocityGraph.Legends.Add(legend8);
             this.VelocityGraph.Location = new System.Drawing.Point(685, 256);
             this.VelocityGraph.Margin = new System.Windows.Forms.Padding(2);
             this.VelocityGraph.Name = "VelocityGraph";
-            series5.ChartArea = "ChartArea1";
-            series5.Legend = "Legend1";
-            series5.Name = "Series1";
-            this.VelocityGraph.Series.Add(series5);
+            series8.ChartArea = "ChartArea1";
+            series8.Legend = "Legend1";
+            series8.Name = "Series1";
+            this.VelocityGraph.Series.Add(series8);
             this.VelocityGraph.Size = new System.Drawing.Size(250, 208);
             this.VelocityGraph.TabIndex = 17;
             this.VelocityGraph.Text = "chart2";
             // 
             // chart3
             // 
-            chartArea6.Name = "ChartArea1";
-            this.chart3.ChartAreas.Add(chartArea6);
-            legend6.Name = "Legend1";
-            this.chart3.Legends.Add(legend6);
+            chartArea9.Name = "ChartArea1";
+            this.chart3.ChartAreas.Add(chartArea9);
+            legend9.Name = "Legend1";
+            this.chart3.Legends.Add(legend9);
             this.chart3.Location = new System.Drawing.Point(685, 35);
             this.chart3.Margin = new System.Windows.Forms.Padding(2);
             this.chart3.Name = "chart3";
-            series6.ChartArea = "ChartArea1";
-            series6.Legend = "Legend1";
-            series6.Name = "Series1";
-            this.chart3.Series.Add(series6);
+            series9.ChartArea = "ChartArea1";
+            series9.Legend = "Legend1";
+            series9.Name = "Series1";
+            this.chart3.Series.Add(series9);
             this.chart3.Size = new System.Drawing.Size(250, 208);
             this.chart3.TabIndex = 18;
             this.chart3.Text = "chart3";
@@ -436,7 +439,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(3, 1, 0, 1);
-            this.menuStrip1.Size = new System.Drawing.Size(985, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(956, 24);
             this.menuStrip1.TabIndex = 22;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -649,6 +652,7 @@
             this.OLSpeedRoll.Name = "OLSpeedRoll";
             this.OLSpeedRoll.Size = new System.Drawing.Size(76, 20);
             this.OLSpeedRoll.TabIndex = 28;
+            this.OLSpeedRoll.ValueChanged += new System.EventHandler(this.OLSpeedRoll_ValueChanged);
             // 
             // OLSpeedSlide
             // 
@@ -658,6 +662,7 @@
             this.OLSpeedSlide.Name = "OLSpeedSlide";
             this.OLSpeedSlide.Size = new System.Drawing.Size(104, 45);
             this.OLSpeedSlide.TabIndex = 0;
+            this.OLSpeedSlide.Scroll += new System.EventHandler(this.OLSpeedSlide_Scroll);
             // 
             // groupBox2
             // 
@@ -688,6 +693,7 @@
             this.KPRoll.Name = "KPRoll";
             this.KPRoll.Size = new System.Drawing.Size(67, 20);
             this.KPRoll.TabIndex = 16;
+            this.KPRoll.ValueChanged += new System.EventHandler(this.KPRoll_ValueChanged);
             // 
             // label15
             // 
@@ -707,6 +713,7 @@
             this.KIButt.TabIndex = 18;
             this.KIButt.Text = "Change Ki";
             this.KIButt.UseVisualStyleBackColor = true;
+            this.KIButt.Click += new System.EventHandler(this.KIButt_Click);
             // 
             // label14
             // 
@@ -748,6 +755,7 @@
             this.KPButt.TabIndex = 19;
             this.KPButt.Text = "Change Kp";
             this.KPButt.UseVisualStyleBackColor = true;
+            this.KPButt.Click += new System.EventHandler(this.KPButt_Click);
             // 
             // KDButt
             // 
@@ -758,6 +766,7 @@
             this.KDButt.TabIndex = 21;
             this.KDButt.Text = "Change Kd";
             this.KDButt.UseVisualStyleBackColor = true;
+            this.KDButt.Click += new System.EventHandler(this.KDButt_Click);
             // 
             // KdRoll
             // 
@@ -771,7 +780,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(985, 539);
+            this.ClientSize = new System.Drawing.Size(956, 539);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.Current_readings);
