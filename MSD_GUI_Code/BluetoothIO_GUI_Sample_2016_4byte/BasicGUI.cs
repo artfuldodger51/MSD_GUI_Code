@@ -24,7 +24,6 @@ namespace BluetoothGUISample
         // Declare variables to store inputs and outputs.
 
         bool runBluetooth = true;
-        int Input2 = 0;
         int DecTickNew = 0;
         int DecTickOld = 0;
         double TotalTicks = 0;
@@ -71,6 +70,8 @@ namespace BluetoothGUISample
 
         byte controlAction = 0;
         byte OLSpeed = 0;
+
+
 
         public Form1()
         {
@@ -215,82 +216,26 @@ namespace BluetoothGUISample
                         Lowbyte = Inputs[1];
                         Highbyte = Inputs[2];
 
-                        Debug.WriteLine(Lowbyte);
-                        Debug.WriteLine(Highbyte);
-                        //0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-                        //0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-                        //TAKE OUT OF HERE AND PUT ELSEWHERE
-                        // Getting a 3 second delay
-
-                        DecTickNew = Lowbyte + 256*Highbyte;
-
-
-                        Diff = DecTickNew - DecTickOld;
-
-
-                        if (Diff > 30000)
-                        { Diff = 1; }
-
-                        else if (Diff < -30000)
-                        { Diff = -1; }
-
-                        DecTickOld = DecTickNew;
-                        TotalTicks += Diff;
-                        TotalTicksBox.Text = TotalTicks.ToString();
-                        //Debug.WriteLine(TotalTicks);
-                        TotalTicksLabel.Text = TotalTicks.ToString(); // If this works im going to cry
-                        //TotalTicksBox.Update(); // Hopefully updates textbox
-
-                        //Print to Position Graph
-                        textBox4.Text = (Math.Abs(0.039885 * TotalTicks) + Math.Sin(2)).ToString();
-                        PositionGraph.Series[0].Points.AddXY(time, PositionGraphCalc(TotalTicks));
-                        PositionGraph.Series[0].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-
-                        //Calculate the checksum.
-                        byte checkSum = (byte)(Inputs[0] + Inputs[1] + Inputs[2]);
-
-                        //Check that the calculated check sum matches the checksum sent with the message.
-                        if (Inputs[4] == checkSum)
-                        {
-                            //Check which port the incoming data is associated with.
-                            switch (Inputs[1])
-                            {
-
-                                case 0: //Save the data to a variable and place in the textbox.
-                                    
-
- 
-
-                                    //TotalTicksBox.Text = TotalTicks.ToString();
-                                    break;
-                                case 1: //Save the data to a variable and place in the textbox. 
-                                    Input2 = Inputs[2];
-                                    break;
-                            }
-                        }
+                        // Do all Tick calculations of a seperate thread.
+                        Thread t = new Thread(CalculateTicks);
+                        t.Start();
+                                              
                     }
                 }
 
-                //-----------------------------------------------------------------------------------------------------------
-                //
-                //
-                //
-                //  PID CONTROL
-                //  u = K_p x e + K_i x (integral of e) + K_d x (derivative of e)
-
-                //  Proportional Control
-                // 
-
-
-                
-                switch (controlMode)
+                // Do settings for Control Settings in a seperate thread to remove lag
+                Thread g = new Thread(SetControl);
+                g.Start();
+                /*switch (controlMode)
                 {
                     case noControl:
                         controlAction = 129;
                         break;
+
                     case openLoop:
                         controlAction = OLSpeed;
                         break;
+
                     case closedLoop:
                         switch (PIDMode)
                         {
@@ -306,10 +251,8 @@ namespace BluetoothGUISample
 
                             case acceleration:
                                 break;
-
-
-  
                         }
+
                         // General PID error calcs
                         //error = setpoint - current;
                         iError = prevError + error;
@@ -319,24 +262,97 @@ namespace BluetoothGUISample
                         //
                         //
                         controlAction = (byte)(Kp * error + Ki * iError + Kd * dError);
-                        
+
 
                         break;
                     default:
                         break;
 
-                }
+                }*/
+            
+
+
+
                 SendIO(1, controlAction);
-                Debug.WriteLine("DAC Value");
-                Debug.WriteLine(controlAction);
+                //Debug.WriteLine("DAC Value");
+                //Debug.WriteLine(controlAction);
 
 
             }
 
          }
-                
 
-        
+        //Thread t
+        private void CalculateTicks()
+        {
+            //Debug.WriteLine(Lowbyte);
+            //Debug.WriteLine(Highbyte);
+            DecTickNew = Lowbyte + 256 * Highbyte;
+
+
+            Diff = DecTickNew - DecTickOld;
+
+
+            if (Diff > 30000)
+            { Diff = 1; }
+
+            else if (Diff < -30000)
+            { Diff = -1; }
+
+            DecTickOld = DecTickNew;
+            TotalTicks += Diff;
+            TotalTicksBox.Text = TotalTicks.ToString();
+            //Debug.WriteLine(TotalTicks);
+            //TotalTicksBox.Update(); // Hopefully updates textbox
+        }
+
+        //Thread g
+        private void SetControl()
+        {
+            switch (controlMode)
+            {
+                case noControl:
+                    controlAction = 129;
+                    break;
+
+                case openLoop:
+                    controlAction = OLSpeed;
+                    break;
+
+                case closedLoop:
+                    switch (PIDMode)
+                    {
+                        case position:
+                            setpoint = posSet;
+                            //error = setpoint - currentCountVal
+                            break;
+
+                        case velocity:
+                            //setpoint = box;
+                            //current = DecTickNew;
+                            break;
+
+                        case acceleration:
+                            break;
+                    }
+
+                    // General PID error calcs
+                    //error = setpoint - current;
+                    iError = prevError + error;
+                    dError = error - prevError;
+                    // 
+                    prevError = error;
+                    //
+                    //
+                    controlAction = (byte)(Kp * error + Ki * iError + Kd * dError);
+
+
+                    break;
+                default:
+                    break;
+
+            }
+        }
 
         double PositionGraphCalc(double x)
         {
