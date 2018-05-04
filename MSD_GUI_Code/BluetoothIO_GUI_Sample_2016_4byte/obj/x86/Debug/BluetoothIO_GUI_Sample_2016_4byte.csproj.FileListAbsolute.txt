@@ -38,3 +38,13 @@ C:\Users\17064637\Documents\GitHub\MSD_GUI_Code\MSD_GUI_Code\BluetoothIO_GUI_Sam
 C:\Users\17064637\Documents\GitHub\MSD_GUI_Code\MSD_GUI_Code\BluetoothIO_GUI_Sample_2016_4byte\obj\x86\Debug\BluetoothGUISample.Form1.resources
 C:\Users\17064637\Documents\GitHub\MSD_GUI_Code\MSD_GUI_Code\BluetoothIO_GUI_Sample_2016_4byte\obj\x86\Debug\BluetoothGUISample.Properties.Resources.resources
 C:\Users\17064637\Documents\GitHub\MSD_GUI_Code\MSD_GUI_Code\BluetoothIO_GUI_Sample_2016_4byte\obj\x86\Debug\BluetoothIO_GUI_Sample_2016_4byte.csproj.GenerateResource.Cache
+C:\Users\artfu\Source\Repos\MSD_GUI_Code2\MSD_GUI_Code\BluetoothIO_GUI_Sample_2016_4byte\obj\x86\Debug\BluetoothGUISample.Form1.resources
+C:\Users\artfu\Source\Repos\MSD_GUI_Code2\MSD_GUI_Code\BluetoothIO_GUI_Sample_2016_4byte\obj\x86\Debug\BluetoothGUISample.Properties.Resources.resources
+C:\Users\artfu\Source\Repos\MSD_GUI_Code2\MSD_GUI_Code\BluetoothIO_GUI_Sample_2016_4byte\obj\x86\Debug\BluetoothIO_GUI_Sample_2016_4byte.csproj.GenerateResource.cache
+C:\Users\artfu\Source\Repos\MSD_GUI_Code2\MSD_GUI_Code\BluetoothIO_GUI_Sample_2016_4byte\obj\x86\Debug\BluetoothIO_GUI_Sample_2016_4byte.csproj.CoreCompileInputs.cache
+C:\Users\artfu\Source\Repos\MSD_GUI_Code2\MSD_GUI_Code\BluetoothIO_GUI_Sample_2016_4byte\bin\Debug\BluetoothIO.exe.config
+C:\Users\artfu\Source\Repos\MSD_GUI_Code2\MSD_GUI_Code\BluetoothIO_GUI_Sample_2016_4byte\bin\Debug\BluetoothIO.exe
+C:\Users\artfu\Source\Repos\MSD_GUI_Code2\MSD_GUI_Code\BluetoothIO_GUI_Sample_2016_4byte\bin\Debug\BluetoothIO.pdb
+C:\Users\artfu\Source\Repos\MSD_GUI_Code2\MSD_GUI_Code\BluetoothIO_GUI_Sample_2016_4byte\obj\x86\Debug\BluetoothIO.exe
+C:\Users\artfu\Source\Repos\MSD_GUI_Code2\MSD_GUI_Code\BluetoothIO_GUI_Sample_2016_4byte\obj\x86\Debug\BluetoothIO.pdb
+C:\Users\artfu\Source\Repos\MSD_GUI_Code2\MSD_GUI_Code\BluetoothIO_GUI_Sample_2016_4byte\obj\x86\Debug\BluetoothIO_GUI_Sample_2016_4byte.csprojResolveAssemblyReference.cache

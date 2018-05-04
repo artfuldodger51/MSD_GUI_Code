@@ -23,8 +23,7 @@ namespace BluetoothGUISample
     {
         // Declare variables to store inputs and outputs.
 
-        bool runBluetooth = false;
-        int Input1 = 0;
+        bool runBluetooth = true;
         int Input2 = 0;
         int DecTickNew = 0;
         int DecTickOld = 0;
@@ -142,23 +141,23 @@ namespace BluetoothGUISample
                 if (BitValue1.Value < 150 & BitValue1.Value > 127)
                 {
                     BitVal1 = 150;
-                    SendIO(2, (byte)BitVal1); // The value 1 indicates troubleshooting box 1.}
+                    SendIO(1, (byte)BitVal1); // The value 1 indicates troubleshooting box 1.}
                 }
                 else if (BitValue1.Value < 127 & BitValue1.Value > 107)
                 {
                     BitVal1 = 107;
-                    SendIO(2, (byte)BitVal1); // The value 1 indicates troubleshooting box 1.}
+                    SendIO(1, (byte)BitVal1); // The value 1 indicates troubleshooting box 1.}
                 }
                 
                 else 
                 {
-                    SendIO(2, (byte)BitValue1.Value); // The value 1 indicates troubleshooting box 1.
+                    SendIO(1, (byte)BitValue1.Value); // The value 1 indicates troubleshooting box 1.
                 }
             }
 
             else if (DeadbandBox.Checked == false)
             {
-                SendIO(2, (byte)BitValue1.Value); // The value 1 indicates troubleshooting box 1.}
+                SendIO(1, (byte)BitValue1.Value); // The value 1 indicates troubleshooting box 1.}
             }
 
         }
@@ -193,13 +192,13 @@ namespace BluetoothGUISample
 
         private void getIOtimer_Tick(object sender, EventArgs e) //It is best to continuously check for incoming data as handling the buffer or waiting for event is not practical in C#.
         {
+
             if (bluetooth.IsOpen) //Check that a serial connection exists.
             {
 
-
                 // READ DATA FROM THE ARDUINO
                 //-----------------------------------------------------------------------------------------------------------
-                if (bluetooth.BytesToRead >= 5) //Check that the buffer contains a full four byte package.
+                if (bluetooth.BytesToRead >= 4) //Check that the buffer contains a full four byte package.
                 {
                     Inputs[0] = (byte)bluetooth.ReadByte(); //Read the first byte of the package.
 
@@ -208,13 +207,20 @@ namespace BluetoothGUISample
                         time++;
 
                         //Read the rest of the package.
-                        Inputs[1] = (byte)bluetooth.ReadByte();
-                        Inputs[2] = (byte)bluetooth.ReadByte(); // Data byte (The byte thats useful)
-                        Inputs[3] = (byte)bluetooth.ReadByte(); // Data byte (The byte thats useful)
-                        Inputs[4] = (byte)bluetooth.ReadByte();
+                        Inputs[1] = (byte)bluetooth.ReadByte(); // Low Data Byte
+                        Inputs[2] = (byte)bluetooth.ReadByte(); // High Data byte (The byte thats useful)
+                        Inputs[3] = (byte)bluetooth.ReadByte(); // Checksum Byte 
+                        
 
-                        Lowbyte = Inputs[2];
-                        Highbyte = Inputs[3];
+                        Lowbyte = Inputs[1];
+                        Highbyte = Inputs[2];
+
+                        Debug.WriteLine(Lowbyte);
+                        Debug.WriteLine(Highbyte);
+                        //0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+                        //0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+                        //TAKE OUT OF HERE AND PUT ELSEWHERE
+                        // Getting a 3 second delay
 
                         DecTickNew = Lowbyte + 256*Highbyte;
 
@@ -231,8 +237,9 @@ namespace BluetoothGUISample
                         DecTickOld = DecTickNew;
                         TotalTicks += Diff;
                         TotalTicksBox.Text = TotalTicks.ToString();
-                        TotalTicksBox.Update(); // Hopefully updates textbox
+                        //Debug.WriteLine(TotalTicks);
                         TotalTicksLabel.Text = TotalTicks.ToString(); // If this works im going to cry
+                        //TotalTicksBox.Update(); // Hopefully updates textbox
 
                         //Print to Position Graph
                         textBox4.Text = (Math.Abs(0.039885 * TotalTicks) + Math.Sin(2)).ToString();
@@ -254,7 +261,7 @@ namespace BluetoothGUISample
 
  
 
-                                    TotalTicksBox.Text = TotalTicks.ToString();
+                                    //TotalTicksBox.Text = TotalTicks.ToString();
                                     break;
                                 case 1: //Save the data to a variable and place in the textbox. 
                                     Input2 = Inputs[2];
@@ -279,7 +286,8 @@ namespace BluetoothGUISample
                 switch (controlMode)
                 {
                     case noControl:
-                        controlAction = 127;
+                        controlAction = 129;
+                        break;
                     case openLoop:
                         controlAction = OLSpeed;
                         break;
@@ -319,6 +327,9 @@ namespace BluetoothGUISample
 
                 }
                 SendIO(1, controlAction);
+                Debug.WriteLine("DAC Value");
+                Debug.WriteLine(controlAction);
+
 
             }
 
@@ -352,8 +363,10 @@ namespace BluetoothGUISample
         // Set contol mode for the motor
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            switch (comboBox1.ToString())
+            Debug.WriteLine(comboBox1.SelectedItem.ToString());
+            switch (comboBox1.SelectedItem.ToString())
             {
+
                 case "No Control":
                     controlMode = noControl;
                     break;
