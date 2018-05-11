@@ -55,15 +55,15 @@ namespace BluetoothGUISample
         const int acceleration = 2;
 
         // PID variables
-        int posSet = 0;
+        float posSet = 0;
         float velSet = 0;
         float accSet = 0;
-        int setpoint = 0;
+        float setpoint = 0;
 
-        int error = 0;
-        int iError = 0;
-        int dError = 0;
-        int prevError = 0;
+        float error = 0;
+        float iError = 0;
+        float dError = 0;
+        float prevError = 0;
 
         float Kp = 0;
         float Ki = 0;
@@ -235,7 +235,7 @@ namespace BluetoothGUISample
                         {
                             case position:
                                 setpoint = posSet;
-                                error = setpoint - TotalTicks;
+                                error = (setpoint - TotalTicks);
                                 break;
 
                             case velocity:
@@ -256,7 +256,21 @@ namespace BluetoothGUISample
                         //
                         //
                         controlAction = (byte)(Kp/1000 * error + Ki/1000 * iError + Kd/1000 * dError);
+                        if (controlAction > 255)
+                            controlAction = 255;
+                        else if (controlAction < 0)
+                            controlAction = 0;
+
+
+                        Debug.WriteLine("Error:");
                         Debug.WriteLine(error);
+                        Debug.WriteLine("IError:");
+                        Debug.WriteLine(iError);
+                        Debug.WriteLine("dError:");
+                        Debug.WriteLine(dError);
+                        Debug.WriteLine("ControlAction:");
+                        Debug.WriteLine(controlAction);
+                        
 
                         break;
                     default:
