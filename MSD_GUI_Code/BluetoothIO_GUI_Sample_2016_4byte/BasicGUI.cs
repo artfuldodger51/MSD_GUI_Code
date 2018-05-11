@@ -26,12 +26,13 @@ namespace BluetoothGUISample
         bool runBluetooth = true;
         int DecTickNew = 0;
         int DecTickOld = 0;
-        double TotalTicks = 0;
+        int TotalTicks = 0;
         int Diff = 0;
         double time = 0;
         int BitVal1 = 0;
         int Lowbyte = 0;
         int Highbyte = 0;
+        int var = 0;
 
         // Circumference of Decoder DIsc
         // 
@@ -54,10 +55,10 @@ namespace BluetoothGUISample
         const int acceleration = 2;
 
         // PID variables
-        float posSet = 0;
+        int posSet = 0;
         float velSet = 0;
         float accSet = 0;
-        float setpoint = 0;
+        int setpoint = 0;
 
         int error = 0;
         int iError = 0;
@@ -84,11 +85,13 @@ namespace BluetoothGUISample
             Stopwatch watch = new Stopwatch();
             watch.Start();
 
-           // Thread t = new Thread(() => outputTimer(watch, textBox3));          // Kick off a new thread
-            //t.IsBackground = true;
-           // t.Start();                               // running WriteY()
- 
+            // Do all Tick calculations in a seperate thread.
+            Thread t = new Thread(CalculateTicks);
+            t.Start();
 
+            // Mode Thread
+            //Thread g = new Thread(SetControl);
+            //g.Start();
 
 
             // Establish connection with Bluetooth IOCard
@@ -107,19 +110,7 @@ namespace BluetoothGUISample
                 }
             }
         }
-        /*
-        private void outputTimer (Stopwatch watch, TextBox textBox)
-        {
-
-            while(true)
-            {
-                textBox.Invalidate();
-                textBox.Text = watch.ElapsedMilliseconds.ToString();
-                
-               // textBox.Update();
-            }
-        }
-        */
+        
         // Send a four byte message to the Arduino via serial.
         private void SendIO(byte PORT, byte DATA)
         {
@@ -127,7 +118,7 @@ namespace BluetoothGUISample
             Outputs[1] = PORT;     //Set the second byte to represent the port where, Input 1 = 0, Input 2 = 1, Output 1 = 2 & Output 2 = 3. This could be enumerated to make writing code simpler... (see Arduino driver)
             Outputs[2] = DATA;  //Set the third byte to the value to be assigned to the port. This is only necessary for outputs, however it is best to assign a consistent value such as 0 for input ports.
             Outputs[3] = (byte)(START + PORT + DATA); //Calculate the checksum byte, the same calculation is performed on the Arduino side to confirm the message was received correctly.
-
+            //Debug.WriteLine(Outputs[3]);
             if (bluetooth.IsOpen)
             {
                 bluetooth.Write(Outputs, 0, 4);         //Send all four bytes to the IO card.                      
@@ -136,7 +127,7 @@ namespace BluetoothGUISample
 
         private void button2_Click(object sender, EventArgs e) //Press the button to send the value to Output 1, Arduino Port A.
         {
-             SendIO(0, 0);
+            SendIO(0, 0);
             if (DeadbandBox.Checked == true)
             {
                 if (BitValue1.Value < 150 & BitValue1.Value > 127)
@@ -191,6 +182,9 @@ namespace BluetoothGUISample
             SendIO(1, ZERO);  // The value 1 indicates Input 2, ZERO maintains a consistent value for the message output.
         }
 
+
+
+
         private void getIOtimer_Tick(object sender, EventArgs e) //It is best to continuously check for incoming data as handling the buffer or waiting for event is not practical in C#.
         {
 
@@ -201,6 +195,8 @@ namespace BluetoothGUISample
                 //-----------------------------------------------------------------------------------------------------------
                 if (bluetooth.BytesToRead >= 4) //Check that the buffer contains a full four byte package.
                 {
+                    //if (bluetooth.BytesToRead >= 16)
+                    //    var++;
                     Inputs[0] = (byte)bluetooth.ReadByte(); //Read the first byte of the package.
 
                     if (Inputs[0] == START) //Check that the first byte is in fact the start byte.
@@ -216,17 +212,109 @@ namespace BluetoothGUISample
                         Lowbyte = Inputs[1];
                         Highbyte = Inputs[2];
 
-                        // Do all Tick calculations of a seperate thread.
-                        Thread t = new Thread(CalculateTicks);
-                        t.Start();
+
                                               
                     }
                 }
 
-                // Do settings for Control Settings in a seperate thread to remove lag
-                Thread g = new Thread(SetControl);
-                g.Start();
-                /*switch (controlMode)
+                // Do adjustments for Control Settings in a seperate thread to remove lag
+
+
+                switch (controlMode)
+                {
+                    case noControl:
+                        controlAction = 129;
+                        break;
+
+                    case openLoop:
+                        controlAction = OLSpeed;
+                        break;
+
+                    case closedLoop:
+                        switch (PIDMode)
+                        {
+                            case position:
+                                setpoint = posSet;
+                                error = setpoint - TotalTicks;
+                                break;
+
+                            case velocity:
+                                //setpoint = box;
+                                //current = DecTickNew;
+                                break;
+
+                            case acceleration:
+                                break;
+                        }
+
+                        // General PID error calcs
+                        //error = setpoint - current;
+                        iError = prevError + error;
+                        dError = error - prevError;
+                        // 
+                        prevError = error;
+                        //
+                        //
+                        controlAction = (byte)(Kp/1000 * error + Ki/1000 * iError + Kd/1000 * dError);
+                        Debug.WriteLine(error);
+
+                        break;
+                    default:
+                        break;
+
+                }
+
+
+                SendIO(1, controlAction);
+                SendIO(2, 0);
+                //Debug.WriteLine("DAC Value");
+                //Debug.WriteLine(controlAction);
+
+
+            }
+
+         }
+
+        //Thread t - Count Ticks
+        private void CalculateTicks()
+        {
+            while (TotalTicksBox.IsHandleCreated == false) { }
+            while (true)
+            {
+                //Debug.WriteLine(Lowbyte);
+                //Debug.WriteLine(Highbyte);
+                DecTickNew = Lowbyte + 256 * Highbyte;
+
+
+                Diff = DecTickNew - DecTickOld;
+
+
+                if (Diff > 30000)
+                { Diff = 1; }
+
+                else if (Diff < -30000)
+                { Diff = -1; }
+
+                DecTickOld = DecTickNew;
+                TotalTicks += Diff;
+                //Debug.WriteLine(Lowbyte);
+                this.Invoke((MethodInvoker)delegate ()
+                {
+                    TotalTicksBox.Text = TotalTicks.ToString();
+                });
+
+                //Debug.WriteLine(TotalTicks);
+                //TotalTicksBox.Update(); // Hopefully updates textbox
+            }
+        }
+
+        //Thread g - Choose Mode
+        /*private void SetControl()
+        {
+            while (TotalTicksBox.IsHandleCreated == false) { }
+            while (true)
+            { 
+                switch (controlMode)
                 {
                     case noControl:
                         controlAction = 129;
@@ -268,104 +356,23 @@ namespace BluetoothGUISample
                     default:
                         break;
 
-                }*/
-            
-
-
-
-                SendIO(1, controlAction);
-                //Debug.WriteLine("DAC Value");
-                //Debug.WriteLine(controlAction);
-
-
+                }
+                
             }
+        }*/
 
-         }
-
-        //Thread t
-        private void CalculateTicks()
-        {
-            //Debug.WriteLine(Lowbyte);
-            //Debug.WriteLine(Highbyte);
-            DecTickNew = Lowbyte + 256 * Highbyte;
-
-
-            Diff = DecTickNew - DecTickOld;
-
-
-            if (Diff > 30000)
-            { Diff = 1; }
-
-            else if (Diff < -30000)
-            { Diff = -1; }
-
-            DecTickOld = DecTickNew;
-            TotalTicks += Diff;
-            TotalTicksBox.Text = TotalTicks.ToString();
-            //Debug.WriteLine(TotalTicks);
-            //TotalTicksBox.Update(); // Hopefully updates textbox
-        }
-
-        //Thread g
-        private void SetControl()
-        {
-            switch (controlMode)
-            {
-                case noControl:
-                    controlAction = 129;
-                    break;
-
-                case openLoop:
-                    controlAction = OLSpeed;
-                    break;
-
-                case closedLoop:
-                    switch (PIDMode)
-                    {
-                        case position:
-                            setpoint = posSet;
-                            //error = setpoint - currentCountVal
-                            break;
-
-                        case velocity:
-                            //setpoint = box;
-                            //current = DecTickNew;
-                            break;
-
-                        case acceleration:
-                            break;
-                    }
-
-                    // General PID error calcs
-                    //error = setpoint - current;
-                    iError = prevError + error;
-                    dError = error - prevError;
-                    // 
-                    prevError = error;
-                    //
-                    //
-                    controlAction = (byte)(Kp * error + Ki * iError + Kd * dError);
-
-
-                    break;
-                default:
-                    break;
-
-            }
-        }
-
-        double PositionGraphCalc(double x)
+        /*double PositionGraphCalc(double x)
         {
             return (Math.Abs(0.039885*x)+Math.Sin(2));
             
-        }
+        }*/
 
-        private void Form1_Load(object sender, EventArgs e)
+        /*private void Form1_Load(object sender, EventArgs e)
         {
             PositionGraph.ChartAreas[0].AxisY.ScaleView.Zoom(-15, 15); // -15<= y <=15
             PositionGraph.ChartAreas[0].AxisX.ScaleView.Zoom(-15, 2); // -15 <= x <= 2
-            PositionGraph.ChartAreas[0].CursorX.IsUserEnabled = true;
-            PositionGraph.ChartAreas[0].CursorX.IsUserSelectionEnabled = true;
+            PositionGraph.ChartAreas[0].CursorX.IsUserEnabled = false;
+            PositionGraph.ChartAreas[0].CursorX.IsUserSelectionEnabled = false;
             PositionGraph.ChartAreas[0].AxisX.ScaleView.Zoomable = true;
             PositionGraph.Series[0].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
             //for (int i = -15; i <2; i++)
@@ -373,7 +380,7 @@ namespace BluetoothGUISample
             //    PositionGraph.Series[0].Points.AddXY(i, function(i));
             //    PositionGraph.Series[0].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
             //}
-        }
+        }*/
 
 
         // Set contol mode for the motor
@@ -397,7 +404,12 @@ namespace BluetoothGUISample
 
             }
         }
+   
 
+
+// ---------------------------------------------------------------------------------------------------------------- //
+// ------------------------------------------- PID CONTROL -------------------------------------------------------- //
+// ---------------------------------------------------------------------------------------------------------------- //
 
         // These 3 radio buttons select the PID control mode. Only 1 may be selected at a time. 
         private void PosRadio_CheckedChanged(object sender, EventArgs e)
@@ -460,7 +472,7 @@ namespace BluetoothGUISample
         private void PosButton_Click_1(object sender, EventArgs e)
         {
             if (PosRadio.Checked == true)
-                posSet = (float)NextPos.Value;
+                posSet = (int)NextPos.Value;
         }
 
         private void VelButton_Click_1(object sender, EventArgs e)
@@ -486,6 +498,8 @@ namespace BluetoothGUISample
             OLSpeedSlide.Value = (int)OLSpeedRoll.Value;
             OLSpeed = (byte)((OLSpeedSlide.Value + 100) / 200 * 255);
         }
+
+
     }
 
 }

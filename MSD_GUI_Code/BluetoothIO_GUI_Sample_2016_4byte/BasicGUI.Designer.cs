@@ -124,12 +124,13 @@
             // getIOtimer
             // 
             this.getIOtimer.Enabled = true;
+            this.getIOtimer.Interval = 5;
             this.getIOtimer.Tick += new System.EventHandler(this.getIOtimer_Tick);
             // 
             // NextPos
             // 
             this.NextPos.Location = new System.Drawing.Point(182, 71);
-            this.NextPos.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.NextPos.Margin = new System.Windows.Forms.Padding(6);
             this.NextPos.Maximum = new decimal(new int[] {
             255,
             0,
@@ -142,7 +143,7 @@
             // PosButton
             // 
             this.PosButton.Location = new System.Drawing.Point(468, 71);
-            this.PosButton.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.PosButton.Margin = new System.Windows.Forms.Padding(6);
             this.PosButton.Name = "PosButton";
             this.PosButton.Size = new System.Drawing.Size(232, 44);
             this.PosButton.TabIndex = 4;
@@ -153,7 +154,7 @@
             // VelButton
             // 
             this.VelButton.Location = new System.Drawing.Point(468, 165);
-            this.VelButton.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.VelButton.Margin = new System.Windows.Forms.Padding(6);
             this.VelButton.Name = "VelButton";
             this.VelButton.Size = new System.Drawing.Size(232, 44);
             this.VelButton.TabIndex = 4;
@@ -164,7 +165,7 @@
             // NextVel
             // 
             this.NextVel.Location = new System.Drawing.Point(178, 175);
-            this.NextVel.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.NextVel.Margin = new System.Windows.Forms.Padding(6);
             this.NextVel.Maximum = new decimal(new int[] {
             255,
             0,
@@ -177,7 +178,7 @@
             // NextAcc
             // 
             this.NextAcc.Location = new System.Drawing.Point(178, 271);
-            this.NextAcc.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.NextAcc.Margin = new System.Windows.Forms.Padding(4);
             this.NextAcc.Name = "NextAcc";
             this.NextAcc.Size = new System.Drawing.Size(250, 31);
             this.NextAcc.TabIndex = 5;
@@ -185,7 +186,7 @@
             // AccButton
             // 
             this.AccButton.Location = new System.Drawing.Point(468, 262);
-            this.AccButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.AccButton.Margin = new System.Windows.Forms.Padding(4);
             this.AccButton.Name = "AccButton";
             this.AccButton.Size = new System.Drawing.Size(232, 44);
             this.AccButton.TabIndex = 6;
@@ -196,7 +197,7 @@
             // PosRad
             // 
             this.PosRad.Location = new System.Drawing.Point(26, 98);
-            this.PosRad.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.PosRad.Margin = new System.Windows.Forms.Padding(4);
             this.PosRad.Name = "PosRad";
             this.PosRad.Size = new System.Drawing.Size(104, 31);
             this.PosRad.TabIndex = 7;
@@ -204,7 +205,7 @@
             // VelRad
             // 
             this.VelRad.Location = new System.Drawing.Point(26, 177);
-            this.VelRad.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.VelRad.Margin = new System.Windows.Forms.Padding(4);
             this.VelRad.Name = "VelRad";
             this.VelRad.Size = new System.Drawing.Size(100, 31);
             this.VelRad.TabIndex = 8;
@@ -212,7 +213,7 @@
             // AccRad
             // 
             this.AccRad.Location = new System.Drawing.Point(26, 256);
-            this.AccRad.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.AccRad.Margin = new System.Windows.Forms.Padding(4);
             this.AccRad.Name = "AccRad";
             this.AccRad.Size = new System.Drawing.Size(100, 31);
             this.AccRad.TabIndex = 9;
@@ -284,7 +285,7 @@
             legend1.Name = "Legend1";
             this.PositionGraph.Legends.Add(legend1);
             this.PositionGraph.Location = new System.Drawing.Point(836, 67);
-            this.PositionGraph.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.PositionGraph.Margin = new System.Windows.Forms.Padding(4);
             this.PositionGraph.Name = "PositionGraph";
             series1.ChartArea = "ChartArea1";
             series1.Legend = "Legend1";
@@ -301,7 +302,7 @@
             legend2.Name = "Legend1";
             this.VelocityGraph.Legends.Add(legend2);
             this.VelocityGraph.Location = new System.Drawing.Point(1370, 492);
-            this.VelocityGraph.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.VelocityGraph.Margin = new System.Windows.Forms.Padding(4);
             this.VelocityGraph.Name = "VelocityGraph";
             series2.ChartArea = "ChartArea1";
             series2.Legend = "Legend1";
@@ -318,7 +319,7 @@
             legend3.Name = "Legend1";
             this.chart3.Legends.Add(legend3);
             this.chart3.Location = new System.Drawing.Point(1370, 67);
-            this.chart3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chart3.Margin = new System.Windows.Forms.Padding(4);
             this.chart3.Name = "chart3";
             series3.ChartArea = "ChartArea1";
             series3.Legend = "Legend1";
@@ -331,7 +332,7 @@
             // BitValue1
             // 
             this.BitValue1.Location = new System.Drawing.Point(14, 69);
-            this.BitValue1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.BitValue1.Margin = new System.Windows.Forms.Padding(4);
             this.BitValue1.Maximum = new decimal(new int[] {
             255,
             0,
@@ -353,9 +354,9 @@
             this.Troubleshooting.Controls.Add(this.label7);
             this.Troubleshooting.Controls.Add(this.BitValue1);
             this.Troubleshooting.Location = new System.Drawing.Point(474, 140);
-            this.Troubleshooting.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Troubleshooting.Margin = new System.Windows.Forms.Padding(4);
             this.Troubleshooting.Name = "Troubleshooting";
-            this.Troubleshooting.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Troubleshooting.Padding = new System.Windows.Forms.Padding(4);
             this.Troubleshooting.Size = new System.Drawing.Size(346, 344);
             this.Troubleshooting.TabIndex = 21;
             this.Troubleshooting.TabStop = false;
@@ -375,7 +376,7 @@
             // 
             this.DeadbandBox.AutoSize = true;
             this.DeadbandBox.Location = new System.Drawing.Point(24, 204);
-            this.DeadbandBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.DeadbandBox.Margin = new System.Windows.Forms.Padding(4);
             this.DeadbandBox.Name = "DeadbandBox";
             this.DeadbandBox.Size = new System.Drawing.Size(252, 29);
             this.DeadbandBox.TabIndex = 26;
@@ -385,7 +386,7 @@
             // textBox5
             // 
             this.textBox5.Location = new System.Drawing.Point(186, 242);
-            this.textBox5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBox5.Margin = new System.Windows.Forms.Padding(4);
             this.textBox5.Name = "textBox5";
             this.textBox5.Size = new System.Drawing.Size(100, 31);
             this.textBox5.TabIndex = 25;
@@ -393,7 +394,7 @@
             // textBox4
             // 
             this.textBox4.Location = new System.Drawing.Point(20, 244);
-            this.textBox4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBox4.Margin = new System.Windows.Forms.Padding(4);
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(100, 31);
             this.textBox4.TabIndex = 24;
@@ -411,7 +412,7 @@
             // TotalTicksBox
             // 
             this.TotalTicksBox.Location = new System.Drawing.Point(24, 144);
-            this.TotalTicksBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.TotalTicksBox.Margin = new System.Windows.Forms.Padding(4);
             this.TotalTicksBox.Name = "TotalTicksBox";
             this.TotalTicksBox.Size = new System.Drawing.Size(136, 31);
             this.TotalTicksBox.TabIndex = 22;
@@ -419,7 +420,7 @@
             // button2
             // 
             this.button2.Location = new System.Drawing.Point(186, 63);
-            this.button2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button2.Margin = new System.Windows.Forms.Padding(4);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(136, 42);
             this.button2.TabIndex = 21;
@@ -455,7 +456,7 @@
             "Deadband Testing",
             "Positional Control"});
             this.comboBox1.Location = new System.Drawing.Point(32, 67);
-            this.comboBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.comboBox1.Margin = new System.Windows.Forms.Padding(4);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(184, 33);
             this.comboBox1.TabIndex = 23;
@@ -476,9 +477,9 @@
             this.PID_Control.Controls.Add(this.label5);
             this.PID_Control.Controls.Add(this.label4);
             this.PID_Control.Location = new System.Drawing.Point(32, 629);
-            this.PID_Control.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.PID_Control.Margin = new System.Windows.Forms.Padding(4);
             this.PID_Control.Name = "PID_Control";
-            this.PID_Control.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.PID_Control.Padding = new System.Windows.Forms.Padding(4);
             this.PID_Control.Size = new System.Drawing.Size(728, 313);
             this.PID_Control.TabIndex = 24;
             this.PID_Control.TabStop = false;
@@ -488,7 +489,7 @@
             // 
             this.AccRadio.AutoSize = true;
             this.AccRadio.Location = new System.Drawing.Point(16, 269);
-            this.AccRadio.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.AccRadio.Margin = new System.Windows.Forms.Padding(6);
             this.AccRadio.Name = "AccRadio";
             this.AccRadio.Size = new System.Drawing.Size(162, 29);
             this.AccRadio.TabIndex = 18;
@@ -501,7 +502,7 @@
             // 
             this.VelRadio.AutoSize = true;
             this.VelRadio.Location = new System.Drawing.Point(16, 173);
-            this.VelRadio.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.VelRadio.Margin = new System.Windows.Forms.Padding(6);
             this.VelRadio.Name = "VelRadio";
             this.VelRadio.Size = new System.Drawing.Size(119, 29);
             this.VelRadio.TabIndex = 17;
@@ -514,7 +515,7 @@
             // 
             this.PosRadio.AutoSize = true;
             this.PosRadio.Location = new System.Drawing.Point(16, 77);
-            this.PosRadio.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.PosRadio.Margin = new System.Windows.Forms.Padding(6);
             this.PosRadio.Name = "PosRadio";
             this.PosRadio.Size = new System.Drawing.Size(120, 29);
             this.PosRadio.TabIndex = 16;
@@ -551,9 +552,9 @@
             this.Current_readings.Controls.Add(this.AccRad);
             this.Current_readings.Controls.Add(this.PosRad);
             this.Current_readings.Location = new System.Drawing.Point(772, 629);
-            this.Current_readings.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Current_readings.Margin = new System.Windows.Forms.Padding(6);
             this.Current_readings.Name = "Current_readings";
-            this.Current_readings.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Current_readings.Padding = new System.Windows.Forms.Padding(6);
             this.Current_readings.Size = new System.Drawing.Size(456, 313);
             this.Current_readings.TabIndex = 26;
             this.Current_readings.TabStop = false;
@@ -562,7 +563,7 @@
             // VelCount
             // 
             this.VelCount.Location = new System.Drawing.Point(300, 177);
-            this.VelCount.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.VelCount.Margin = new System.Windows.Forms.Padding(4);
             this.VelCount.Name = "VelCount";
             this.VelCount.Size = new System.Drawing.Size(100, 31);
             this.VelCount.TabIndex = 26;
@@ -570,7 +571,7 @@
             // AccCount
             // 
             this.AccCount.Location = new System.Drawing.Point(300, 256);
-            this.AccCount.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.AccCount.Margin = new System.Windows.Forms.Padding(4);
             this.AccCount.Name = "AccCount";
             this.AccCount.Size = new System.Drawing.Size(100, 31);
             this.AccCount.TabIndex = 27;
@@ -578,7 +579,7 @@
             // PosCount
             // 
             this.PosCount.Location = new System.Drawing.Point(300, 98);
-            this.PosCount.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.PosCount.Margin = new System.Windows.Forms.Padding(4);
             this.PosCount.Name = "PosCount";
             this.PosCount.Size = new System.Drawing.Size(104, 31);
             this.PosCount.TabIndex = 25;
@@ -586,7 +587,7 @@
             // VelDeg
             // 
             this.VelDeg.Location = new System.Drawing.Point(162, 177);
-            this.VelDeg.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.VelDeg.Margin = new System.Windows.Forms.Padding(4);
             this.VelDeg.Name = "VelDeg";
             this.VelDeg.Size = new System.Drawing.Size(100, 31);
             this.VelDeg.TabIndex = 23;
@@ -594,7 +595,7 @@
             // AccDeg
             // 
             this.AccDeg.Location = new System.Drawing.Point(162, 256);
-            this.AccDeg.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.AccDeg.Margin = new System.Windows.Forms.Padding(4);
             this.AccDeg.Name = "AccDeg";
             this.AccDeg.Size = new System.Drawing.Size(100, 31);
             this.AccDeg.TabIndex = 24;
@@ -602,7 +603,7 @@
             // PosDeg
             // 
             this.PosDeg.Location = new System.Drawing.Point(162, 98);
-            this.PosDeg.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.PosDeg.Margin = new System.Windows.Forms.Padding(4);
             this.PosDeg.Name = "PosDeg";
             this.PosDeg.Size = new System.Drawing.Size(104, 31);
             this.PosDeg.TabIndex = 22;
@@ -642,9 +643,9 @@
             this.groupBox1.Controls.Add(this.OLSpeedRoll);
             this.groupBox1.Controls.Add(this.OLSpeedSlide);
             this.groupBox1.Location = new System.Drawing.Point(32, 140);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(6);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(6);
             this.groupBox1.Size = new System.Drawing.Size(410, 129);
             this.groupBox1.TabIndex = 27;
             this.groupBox1.TabStop = false;
@@ -653,7 +654,7 @@
             // OLSpeedRoll
             // 
             this.OLSpeedRoll.Location = new System.Drawing.Point(10, 56);
-            this.OLSpeedRoll.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.OLSpeedRoll.Margin = new System.Windows.Forms.Padding(4);
             this.OLSpeedRoll.Minimum = new decimal(new int[] {
             100,
             0,
@@ -667,7 +668,7 @@
             // OLSpeedSlide
             // 
             this.OLSpeedSlide.Location = new System.Drawing.Point(190, 33);
-            this.OLSpeedSlide.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.OLSpeedSlide.Margin = new System.Windows.Forms.Padding(6);
             this.OLSpeedSlide.Maximum = 100;
             this.OLSpeedSlide.Minimum = -100;
             this.OLSpeedSlide.Name = "OLSpeedSlide";
@@ -687,9 +688,9 @@
             this.groupBox2.Controls.Add(this.KDButt);
             this.groupBox2.Controls.Add(this.KdRoll);
             this.groupBox2.Location = new System.Drawing.Point(32, 281);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(6);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(6);
             this.groupBox2.Size = new System.Drawing.Size(410, 333);
             this.groupBox2.TabIndex = 28;
             this.groupBox2.TabStop = false;
@@ -698,9 +699,9 @@
             // KPRoll
             // 
             this.KPRoll.Location = new System.Drawing.Point(8, 56);
-            this.KPRoll.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.KPRoll.Margin = new System.Windows.Forms.Padding(6);
             this.KPRoll.Maximum = new decimal(new int[] {
-            255,
+            100000,
             0,
             0,
             0});
@@ -722,7 +723,7 @@
             // KIButt
             // 
             this.KIButt.Location = new System.Drawing.Point(184, 146);
-            this.KIButt.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.KIButt.Margin = new System.Windows.Forms.Padding(6);
             this.KIButt.Name = "KIButt";
             this.KIButt.Size = new System.Drawing.Size(172, 44);
             this.KIButt.TabIndex = 18;
@@ -743,9 +744,9 @@
             // KIRoll
             // 
             this.KIRoll.Location = new System.Drawing.Point(4, 156);
-            this.KIRoll.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.KIRoll.Margin = new System.Windows.Forms.Padding(6);
             this.KIRoll.Maximum = new decimal(new int[] {
-            255,
+            100000,
             0,
             0,
             0});
@@ -766,7 +767,7 @@
             // KPButt
             // 
             this.KPButt.Location = new System.Drawing.Point(184, 56);
-            this.KPButt.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.KPButt.Margin = new System.Windows.Forms.Padding(6);
             this.KPButt.Name = "KPButt";
             this.KPButt.Size = new System.Drawing.Size(172, 44);
             this.KPButt.TabIndex = 19;
@@ -777,7 +778,7 @@
             // KDButt
             // 
             this.KDButt.Location = new System.Drawing.Point(184, 242);
-            this.KDButt.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.KDButt.Margin = new System.Windows.Forms.Padding(4);
             this.KDButt.Name = "KDButt";
             this.KDButt.Size = new System.Drawing.Size(172, 44);
             this.KDButt.TabIndex = 21;
@@ -788,7 +789,12 @@
             // KdRoll
             // 
             this.KdRoll.Location = new System.Drawing.Point(4, 252);
-            this.KdRoll.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.KdRoll.Margin = new System.Windows.Forms.Padding(4);
+            this.KdRoll.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
             this.KdRoll.Name = "KdRoll";
             this.KdRoll.Size = new System.Drawing.Size(142, 31);
             this.KdRoll.TabIndex = 20;
@@ -810,10 +816,9 @@
             this.Controls.Add(this.PositionGraph);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Margin = new System.Windows.Forms.Padding(6);
             this.Name = "Form1";
             this.Text = "Form1";
-            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.NextPos)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NextVel)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NextAcc)).EndInit();
