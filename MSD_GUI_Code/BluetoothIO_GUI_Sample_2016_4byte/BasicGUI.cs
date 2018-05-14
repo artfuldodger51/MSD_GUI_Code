@@ -55,24 +55,27 @@ namespace BluetoothGUISample
         const int acceleration = 2;
 
         // PID variables
+        int runningTime = 0;
         float posSet = 0;
         float velSet = 0;
         float accSet = 0;
         float setpoint = 0;
+        float SettingValue = 0;
 
-        float error = 0;
+        float pError = 0;
         float iError = 0;
         float dError = 0;
         float prevError = 0;
 
-        float Kp = 0;
-        float Ki = 0;
-        float Kd = 0;
+        float Kp = 200;
+        float Ki = 200;
+        float Kd = 200;
+        
 
         byte controlAction = 0;
         byte OLSpeed = 0;
 
-
+        
 
         public Form1()
         {
@@ -235,7 +238,7 @@ namespace BluetoothGUISample
                         {
                             case position:
                                 setpoint = posSet;
-                                error = (setpoint - TotalTicks);
+                                pError = (setpoint - TotalTicks);
                                 break;
 
                             case velocity:
@@ -247,23 +250,55 @@ namespace BluetoothGUISample
                                 break;
                         }
 
-                        // General PID error calcs
-                        //error = setpoint - current;
-                        iError = prevError + error;
-                        dError = error - prevError;
-                        // 
-                        prevError = error;
+
                         //
+                        // http://robotsforroboticists.com/pid-control/
+                        // https://tutorial.cytron.io/2012/06/22/pid-for-embedded-design/
                         //
-                        controlAction = (byte)(Kp/1000 * error + Ki/1000 * iError + Kd/1000 * dError);
-                        if (controlAction > 255)
-                            controlAction = 255;
-                        else if (controlAction < 0)
-                            controlAction = 0;
+
+                        // PID Control
+                        pError = posSet + TotalTicks;
+                        iError = iError + pError;
+                        dError = pError - prevError;
+                        prevError = pError;
+
+                        if (pError <= 1000 && pError >= -1000)
+                        {
+                            SettingValue = ((Kp / 1000 * pError + Ki / 1000 * iError + Kd / 1000 * dError) + 127);
+                            if (SettingValue > 150)
+                                SettingValue = 150;
+                            else if (SettingValue < 100)
+                                SettingValue = 100;
+
+                            controlAction = (byte)SettingValue;
+                        }
+
+                        else if (pError <= 20000 && pError >= -20000)
+                        {
+                            SettingValue = ((Kp / 1000 * pError + Ki / 1000 * iError + Kd / 1000 * dError) + 127);
+                            if (SettingValue > 200)
+                                SettingValue = 200;
+                            else if (SettingValue < 55)
+                                SettingValue = 55;
+
+                            controlAction = (byte)SettingValue;
+                        }
+
+                        else
+                        {
+                            SettingValue = ((Kp / 1000 * pError + Ki / 1000 * iError + Kd / 1000 * dError) + 127);
+                            if (SettingValue > 255)
+                                SettingValue = 255;
+                            else if (SettingValue < 0)
+                                SettingValue = 0;
+
+                            controlAction = (byte)SettingValue;
+                        }
 
 
+                        Debug.WriteLine("-------------------------------------------------");
                         Debug.WriteLine("Error:");
-                        Debug.WriteLine(error);
+                        Debug.WriteLine(pError);
                         Debug.WriteLine("IError:");
                         Debug.WriteLine(iError);
                         Debug.WriteLine("dError:");
