@@ -48,7 +48,7 @@ namespace BluetoothGUISample
         const int noControl = 0;
         const int openLoop = 1;
         const int closedLoop = 2;
-        const int deadbandRemove = 3;
+        bool deadbandRemove = false;
 
         int PIDMode = 0;
         const int position = 0;
@@ -199,8 +199,7 @@ namespace BluetoothGUISample
                 //-----------------------------------------------------------------------------------------------------------
                 if (bluetooth.BytesToRead >= 4) //Check that the buffer contains a full four byte package.
                 {
-                    //if (bluetooth.BytesToRead >= 16)
-                    //    var++;
+
                     Inputs[0] = (byte)bluetooth.ReadByte(); //Read the first byte of the package.
 
                     if (Inputs[0] == START) //Check that the first byte is in fact the start byte.
@@ -212,10 +211,14 @@ namespace BluetoothGUISample
                         Inputs[2] = (byte)bluetooth.ReadByte(); // High Data byte (The byte thats useful)
                         Inputs[3] = (byte)bluetooth.ReadByte(); // Checksum Byte 
                         
-
+                       
                         Lowbyte = Inputs[1];
                         Highbyte = Inputs[2];
 
+                        if (Lowbyte == 69 && Highbyte == 69)
+                        {
+                            deadbandRemove = false;
+                        }
 
                                               
                     }
@@ -226,9 +229,6 @@ namespace BluetoothGUISample
 
                 switch (controlMode)
                 {
-                    case deadbandRemove:
-                        break;
-
                     case noControl:
                         controlAction = 129;
                         break;
@@ -318,8 +318,12 @@ namespace BluetoothGUISample
                 }
 
 
-                SendIO(1, controlAction);
-                SendIO(2, 0);
+                if (deadbandRemove != true)
+                {
+                
+                    SendIO(1, controlAction);
+                    SendIO(2, 0);
+                }
                 //Debug.WriteLine("DAC Value");
                 //Debug.WriteLine(controlAction);
 
@@ -554,7 +558,19 @@ namespace BluetoothGUISample
 
         private void button1_Click(object sender, EventArgs e)
         {
-            controlAction = deadbandRemove;
+            deadbandRemove = true;
+            SendIO(3, 0);
+        }
+
+        private void DeadbandBox_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            SendIO(4, 0);
+            DeadbandBox.Checked = !DeadbandBox.Checked;
         }
     }
 

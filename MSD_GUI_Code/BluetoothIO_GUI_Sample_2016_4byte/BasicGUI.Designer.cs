@@ -29,15 +29,15 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea13 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend13 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series13 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea14 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend14 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series14 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea15 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend15 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series15 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.bluetooth = new System.IO.Ports.SerialPort(this.components);
             this.getIOtimer = new System.Windows.Forms.Timer(this.components);
             this.NextPos = new System.Windows.Forms.NumericUpDown();
@@ -60,6 +60,7 @@
             this.chart3 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.BitValue1 = new System.Windows.Forms.NumericUpDown();
             this.Troubleshooting = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.TotalTicksLabel = new System.Windows.Forms.Label();
             this.DeadbandBox = new System.Windows.Forms.CheckBox();
             this.textBox5 = new System.Windows.Forms.TextBox();
@@ -98,7 +99,7 @@
             this.KPButt = new System.Windows.Forms.Button();
             this.KDButt = new System.Windows.Forms.Button();
             this.KdRoll = new System.Windows.Forms.NumericUpDown();
-            this.button1 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.NextPos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NextVel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NextAcc)).BeginInit();
@@ -175,7 +176,7 @@
             // NextAcc
             // 
             this.NextAcc.Location = new System.Drawing.Point(89, 141);
-            this.NextAcc.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.NextAcc.Margin = new System.Windows.Forms.Padding(2);
             this.NextAcc.Name = "NextAcc";
             this.NextAcc.Size = new System.Drawing.Size(125, 20);
             this.NextAcc.TabIndex = 5;
@@ -183,7 +184,7 @@
             // AccButton
             // 
             this.AccButton.Location = new System.Drawing.Point(234, 136);
-            this.AccButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.AccButton.Margin = new System.Windows.Forms.Padding(2);
             this.AccButton.Name = "AccButton";
             this.AccButton.Size = new System.Drawing.Size(116, 23);
             this.AccButton.TabIndex = 6;
@@ -194,7 +195,7 @@
             // PosRad
             // 
             this.PosRad.Location = new System.Drawing.Point(13, 51);
-            this.PosRad.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.PosRad.Margin = new System.Windows.Forms.Padding(2);
             this.PosRad.Name = "PosRad";
             this.PosRad.Size = new System.Drawing.Size(54, 20);
             this.PosRad.TabIndex = 7;
@@ -202,7 +203,7 @@
             // VelRad
             // 
             this.VelRad.Location = new System.Drawing.Point(13, 92);
-            this.VelRad.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.VelRad.Margin = new System.Windows.Forms.Padding(2);
             this.VelRad.Name = "VelRad";
             this.VelRad.Size = new System.Drawing.Size(52, 20);
             this.VelRad.TabIndex = 8;
@@ -210,7 +211,7 @@
             // AccRad
             // 
             this.AccRad.Location = new System.Drawing.Point(13, 133);
-            this.AccRad.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.AccRad.Margin = new System.Windows.Forms.Padding(2);
             this.AccRad.Name = "AccRad";
             this.AccRad.Size = new System.Drawing.Size(52, 20);
             this.AccRad.TabIndex = 9;
@@ -277,51 +278,51 @@
             // 
             // PositionGraph
             // 
-            chartArea1.Name = "ChartArea1";
-            this.PositionGraph.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.PositionGraph.Legends.Add(legend1);
+            chartArea13.Name = "ChartArea1";
+            this.PositionGraph.ChartAreas.Add(chartArea13);
+            legend13.Name = "Legend1";
+            this.PositionGraph.Legends.Add(legend13);
             this.PositionGraph.Location = new System.Drawing.Point(418, 35);
-            this.PositionGraph.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.PositionGraph.Margin = new System.Windows.Forms.Padding(2);
             this.PositionGraph.Name = "PositionGraph";
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.PositionGraph.Series.Add(series1);
+            series13.ChartArea = "ChartArea1";
+            series13.Legend = "Legend1";
+            series13.Name = "Series1";
+            this.PositionGraph.Series.Add(series13);
             this.PositionGraph.Size = new System.Drawing.Size(250, 208);
             this.PositionGraph.TabIndex = 16;
             this.PositionGraph.Text = "chart1";
             // 
             // VelocityGraph
             // 
-            chartArea2.Name = "ChartArea1";
-            this.VelocityGraph.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.VelocityGraph.Legends.Add(legend2);
+            chartArea14.Name = "ChartArea1";
+            this.VelocityGraph.ChartAreas.Add(chartArea14);
+            legend14.Name = "Legend1";
+            this.VelocityGraph.Legends.Add(legend14);
             this.VelocityGraph.Location = new System.Drawing.Point(685, 256);
-            this.VelocityGraph.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.VelocityGraph.Margin = new System.Windows.Forms.Padding(2);
             this.VelocityGraph.Name = "VelocityGraph";
-            series2.ChartArea = "ChartArea1";
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            this.VelocityGraph.Series.Add(series2);
+            series14.ChartArea = "ChartArea1";
+            series14.Legend = "Legend1";
+            series14.Name = "Series1";
+            this.VelocityGraph.Series.Add(series14);
             this.VelocityGraph.Size = new System.Drawing.Size(250, 208);
             this.VelocityGraph.TabIndex = 17;
             this.VelocityGraph.Text = "chart2";
             // 
             // chart3
             // 
-            chartArea3.Name = "ChartArea1";
-            this.chart3.ChartAreas.Add(chartArea3);
-            legend3.Name = "Legend1";
-            this.chart3.Legends.Add(legend3);
+            chartArea15.Name = "ChartArea1";
+            this.chart3.ChartAreas.Add(chartArea15);
+            legend15.Name = "Legend1";
+            this.chart3.Legends.Add(legend15);
             this.chart3.Location = new System.Drawing.Point(685, 35);
-            this.chart3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chart3.Margin = new System.Windows.Forms.Padding(2);
             this.chart3.Name = "chart3";
-            series3.ChartArea = "ChartArea1";
-            series3.Legend = "Legend1";
-            series3.Name = "Series1";
-            this.chart3.Series.Add(series3);
+            series15.ChartArea = "ChartArea1";
+            series15.Legend = "Legend1";
+            series15.Name = "Series1";
+            this.chart3.Series.Add(series15);
             this.chart3.Size = new System.Drawing.Size(250, 208);
             this.chart3.TabIndex = 18;
             this.chart3.Text = "chart3";
@@ -329,7 +330,7 @@
             // BitValue1
             // 
             this.BitValue1.Location = new System.Drawing.Point(7, 36);
-            this.BitValue1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.BitValue1.Margin = new System.Windows.Forms.Padding(2);
             this.BitValue1.Maximum = new decimal(new int[] {
             255,
             0,
@@ -341,6 +342,7 @@
             // 
             // Troubleshooting
             // 
+            this.Troubleshooting.Controls.Add(this.button3);
             this.Troubleshooting.Controls.Add(this.button1);
             this.Troubleshooting.Controls.Add(this.TotalTicksLabel);
             this.Troubleshooting.Controls.Add(this.DeadbandBox);
@@ -352,13 +354,23 @@
             this.Troubleshooting.Controls.Add(this.label7);
             this.Troubleshooting.Controls.Add(this.BitValue1);
             this.Troubleshooting.Location = new System.Drawing.Point(237, 73);
-            this.Troubleshooting.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Troubleshooting.Margin = new System.Windows.Forms.Padding(2);
             this.Troubleshooting.Name = "Troubleshooting";
-            this.Troubleshooting.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Troubleshooting.Padding = new System.Windows.Forms.Padding(2);
             this.Troubleshooting.Size = new System.Drawing.Size(173, 246);
             this.Troubleshooting.TabIndex = 21;
             this.Troubleshooting.TabStop = false;
             this.Troubleshooting.Text = "Troubleshooting";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(7, 154);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(94, 23);
+            this.button1.TabIndex = 28;
+            this.button1.Text = "Tune deadband";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // TotalTicksLabel
             // 
@@ -374,17 +386,18 @@
             // 
             this.DeadbandBox.AutoSize = true;
             this.DeadbandBox.Location = new System.Drawing.Point(12, 106);
-            this.DeadbandBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.DeadbandBox.Margin = new System.Windows.Forms.Padding(2);
             this.DeadbandBox.Name = "DeadbandBox";
             this.DeadbandBox.Size = new System.Drawing.Size(131, 17);
             this.DeadbandBox.TabIndex = 26;
             this.DeadbandBox.Text = "Deadband Removed?";
             this.DeadbandBox.UseVisualStyleBackColor = true;
+            this.DeadbandBox.CheckedChanged += new System.EventHandler(this.DeadbandBox_CheckedChanged);
             // 
             // textBox5
             // 
             this.textBox5.Location = new System.Drawing.Point(93, 126);
-            this.textBox5.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBox5.Margin = new System.Windows.Forms.Padding(2);
             this.textBox5.Name = "textBox5";
             this.textBox5.Size = new System.Drawing.Size(52, 20);
             this.textBox5.TabIndex = 25;
@@ -392,7 +405,7 @@
             // textBox4
             // 
             this.textBox4.Location = new System.Drawing.Point(10, 127);
-            this.textBox4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBox4.Margin = new System.Windows.Forms.Padding(2);
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(52, 20);
             this.textBox4.TabIndex = 24;
@@ -410,7 +423,7 @@
             // TotalTicksBox
             // 
             this.TotalTicksBox.Location = new System.Drawing.Point(12, 75);
-            this.TotalTicksBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TotalTicksBox.Margin = new System.Windows.Forms.Padding(2);
             this.TotalTicksBox.Name = "TotalTicksBox";
             this.TotalTicksBox.Size = new System.Drawing.Size(70, 20);
             this.TotalTicksBox.TabIndex = 22;
@@ -418,7 +431,7 @@
             // button2
             // 
             this.button2.Location = new System.Drawing.Point(93, 33);
-            this.button2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button2.Margin = new System.Windows.Forms.Padding(2);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(68, 22);
             this.button2.TabIndex = 21;
@@ -455,7 +468,7 @@
             "Deadband Testing",
             "Positional Control"});
             this.comboBox1.Location = new System.Drawing.Point(16, 35);
-            this.comboBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.comboBox1.Margin = new System.Windows.Forms.Padding(2);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(94, 21);
             this.comboBox1.TabIndex = 23;
@@ -476,9 +489,9 @@
             this.PID_Control.Controls.Add(this.label5);
             this.PID_Control.Controls.Add(this.label4);
             this.PID_Control.Location = new System.Drawing.Point(16, 327);
-            this.PID_Control.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.PID_Control.Margin = new System.Windows.Forms.Padding(2);
             this.PID_Control.Name = "PID_Control";
-            this.PID_Control.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.PID_Control.Padding = new System.Windows.Forms.Padding(2);
             this.PID_Control.Size = new System.Drawing.Size(364, 163);
             this.PID_Control.TabIndex = 24;
             this.PID_Control.TabStop = false;
@@ -557,7 +570,7 @@
             // VelCount
             // 
             this.VelCount.Location = new System.Drawing.Point(150, 92);
-            this.VelCount.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.VelCount.Margin = new System.Windows.Forms.Padding(2);
             this.VelCount.Name = "VelCount";
             this.VelCount.Size = new System.Drawing.Size(52, 20);
             this.VelCount.TabIndex = 26;
@@ -565,7 +578,7 @@
             // AccCount
             // 
             this.AccCount.Location = new System.Drawing.Point(150, 133);
-            this.AccCount.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.AccCount.Margin = new System.Windows.Forms.Padding(2);
             this.AccCount.Name = "AccCount";
             this.AccCount.Size = new System.Drawing.Size(52, 20);
             this.AccCount.TabIndex = 27;
@@ -573,7 +586,7 @@
             // PosCount
             // 
             this.PosCount.Location = new System.Drawing.Point(150, 51);
-            this.PosCount.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.PosCount.Margin = new System.Windows.Forms.Padding(2);
             this.PosCount.Name = "PosCount";
             this.PosCount.Size = new System.Drawing.Size(54, 20);
             this.PosCount.TabIndex = 25;
@@ -581,7 +594,7 @@
             // VelDeg
             // 
             this.VelDeg.Location = new System.Drawing.Point(81, 92);
-            this.VelDeg.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.VelDeg.Margin = new System.Windows.Forms.Padding(2);
             this.VelDeg.Name = "VelDeg";
             this.VelDeg.Size = new System.Drawing.Size(52, 20);
             this.VelDeg.TabIndex = 23;
@@ -589,7 +602,7 @@
             // AccDeg
             // 
             this.AccDeg.Location = new System.Drawing.Point(81, 133);
-            this.AccDeg.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.AccDeg.Margin = new System.Windows.Forms.Padding(2);
             this.AccDeg.Name = "AccDeg";
             this.AccDeg.Size = new System.Drawing.Size(52, 20);
             this.AccDeg.TabIndex = 24;
@@ -597,7 +610,7 @@
             // PosDeg
             // 
             this.PosDeg.Location = new System.Drawing.Point(81, 51);
-            this.PosDeg.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.PosDeg.Margin = new System.Windows.Forms.Padding(2);
             this.PosDeg.Name = "PosDeg";
             this.PosDeg.Size = new System.Drawing.Size(54, 20);
             this.PosDeg.TabIndex = 22;
@@ -646,7 +659,7 @@
             // OLSpeedRoll
             // 
             this.OLSpeedRoll.Location = new System.Drawing.Point(5, 29);
-            this.OLSpeedRoll.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.OLSpeedRoll.Margin = new System.Windows.Forms.Padding(2);
             this.OLSpeedRoll.Minimum = new decimal(new int[] {
             100,
             0,
@@ -763,7 +776,7 @@
             // KDButt
             // 
             this.KDButt.Location = new System.Drawing.Point(92, 126);
-            this.KDButt.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.KDButt.Margin = new System.Windows.Forms.Padding(2);
             this.KDButt.Name = "KDButt";
             this.KDButt.Size = new System.Drawing.Size(86, 23);
             this.KDButt.TabIndex = 21;
@@ -774,7 +787,7 @@
             // KdRoll
             // 
             this.KdRoll.Location = new System.Drawing.Point(2, 131);
-            this.KdRoll.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.KdRoll.Margin = new System.Windows.Forms.Padding(2);
             this.KdRoll.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -784,15 +797,15 @@
             this.KdRoll.Size = new System.Drawing.Size(71, 20);
             this.KdRoll.TabIndex = 20;
             // 
-            // button1
+            // button3
             // 
-            this.button1.Location = new System.Drawing.Point(54, 183);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 28;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.button3.Location = new System.Drawing.Point(5, 188);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(94, 23);
+            this.button3.TabIndex = 29;
+            this.button3.Text = "Remove deadband";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // Form1
             // 
@@ -903,6 +916,7 @@
         private System.Windows.Forms.RadioButton VelRadio;
         private System.Windows.Forms.RadioButton PosRadio;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button3;
     }
 }
 
