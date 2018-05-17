@@ -48,6 +48,7 @@ namespace BluetoothGUISample
         const int noControl = 0;
         const int openLoop = 1;
         const int closedLoop = 2;
+        const int deadbandRemove = 3;
 
         int PIDMode = 0;
         const int position = 0;
@@ -225,6 +226,9 @@ namespace BluetoothGUISample
 
                 switch (controlMode)
                 {
+                    case deadbandRemove:
+                        break;
+
                     case noControl:
                         controlAction = 129;
                         break;
@@ -548,7 +552,10 @@ namespace BluetoothGUISample
             OLSpeed = (byte)((OLSpeedSlide.Value + 100) / 200 * 255);
         }
 
-
+        private void button1_Click(object sender, EventArgs e)
+        {
+            controlAction = deadbandRemove;
+        }
     }
 
 }
