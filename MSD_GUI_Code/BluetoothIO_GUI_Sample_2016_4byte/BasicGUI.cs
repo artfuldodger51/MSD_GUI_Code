@@ -48,6 +48,14 @@ namespace BluetoothGUISample
         const int noControl = 0;
         const int openLoop = 1;
         const int closedLoop = 2;
+        long time1 = 0;
+        float distance1 = 0;
+        float distance2 = 0;
+        float velocitydisplay = 0;
+        float acceldisplay = 0;
+
+        float velocity1 = 0;
+        float velocity2 = 0;
 
         int PIDMode = 0;
         const int position = 0;
@@ -85,13 +93,21 @@ namespace BluetoothGUISample
             InitializeComponent();
 
 
-            Stopwatch watch = new Stopwatch();
-            watch.Start();
+
+            
 
             // Do all Tick calculations in a seperate thread.
             Thread t = new Thread(CalculateTicks);
             t.Start();
 
+            Thread b = new Thread(Calculate_Velocity);
+            b.Start();
+
+            //Thread c = new Thread(Calculate_Accel);
+            //c.Start();
+
+            Thread d = new Thread(Graph_Stuff);
+            d.Start();
             // Mode Thread
             //Thread g = new Thread(SetControl);
             //g.Start();
@@ -215,8 +231,22 @@ namespace BluetoothGUISample
                         Lowbyte = Inputs[1];
                         Highbyte = Inputs[2];
 
+                        DecTickNew = Lowbyte + 256 * Highbyte;
 
-                                              
+
+                        Diff = DecTickNew - DecTickOld;
+
+
+                        if (Diff > 30000)
+                        { Diff = 1; }
+
+                        else if (Diff < -30000)
+                        { Diff = -1; }
+
+                        DecTickOld = DecTickNew;
+                        TotalTicks += Diff;
+
+
                     }
                 }
 
@@ -327,110 +357,118 @@ namespace BluetoothGUISample
         //Thread t - Count Ticks
         private void CalculateTicks()
         {
+            //Thread.Sleep(4000);
             while (TotalTicksBox.IsHandleCreated == false) { }
             while (true)
             {
                 //Debug.WriteLine(Lowbyte);
                 //Debug.WriteLine(Highbyte);
-                DecTickNew = Lowbyte + 256 * Highbyte;
+                /* DecTickNew = Lowbyte + 256 * Highbyte;
 
 
-                Diff = DecTickNew - DecTickOld;
+                 Diff = DecTickNew - DecTickOld;
 
 
-                if (Diff > 30000)
-                { Diff = 1; }
+                 if (Diff > 30000)
+                 { Diff = 1; }
 
-                else if (Diff < -30000)
-                { Diff = -1; }
+                 else if (Diff < -30000)
+                 { Diff = -1; }
 
-                DecTickOld = DecTickNew;
-                TotalTicks += Diff;
-                //Debug.WriteLine(Lowbyte);
+                 DecTickOld = DecTickNew;
+                 TotalTicks += Diff;
+                 //Debug.WriteLine(Lowbyte);*/
+                Thread.Sleep(50);
                 this.Invoke((MethodInvoker)delegate ()
                 {
                     TotalTicksBox.Text = TotalTicks.ToString();
                 });
 
-                //Debug.WriteLine(TotalTicks);
-                //TotalTicksBox.Update(); // Hopefully updates textbox
+
+
+            }
+        } 
+
+        //Thread d
+        private void Graph_Stuff()
+        {
+            //Thread.Sleep(4000);
+            while (VelGraph.IsHandleCreated == false) { }
+            while (true)
+            {
+                Thread.Sleep(100);
+                this.Invoke((MethodInvoker)delegate ()
+                {
+                    PositionGraph.Series[0].Points.AddXY(time1 / 1000, TotalTicks);
+                    PositionGraph.ChartAreas[0].AxisX.ScaleView.Zoom(time1 / 1000 - 20, time1 / 1000); // -15 <= x <= 2
+                    VelGraph.Series[0].Points.AddXY(time1 / 1000, velocitydisplay);
+                    VelGraph.ChartAreas[0].AxisX.ScaleView.Zoom(time1 / 1000 - 20, time1 / 1000); // -15 <= x <= 2
+                    AccelGraph.Series[0].Points.AddXY(time1 / 1000, acceldisplay);
+                    AccelGraph.ChartAreas[0].AxisX.ScaleView.Zoom(time1 / 1000 - 20, time1 / 1000); // -15 <= x <= 2
+                });
+
+                
+
             }
         }
 
-        //Thread g - Choose Mode
-        /*private void SetControl()
+
+
+        //Thread b
+        private void Calculate_Velocity()
         {
-            while (TotalTicksBox.IsHandleCreated == false) { }
+            //Thread.Sleep(4000);
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
+            while (VelCount.IsHandleCreated == false) { }
             while (true)
-            { 
-                switch (controlMode)
+            {
+
+                time1 = watch.ElapsedMilliseconds;
+                distance1 = TotalTicks;
+                Thread.Sleep(50);
+                distance2 = TotalTicks;
+                velocitydisplay = (distance2 - distance1) / 50 * 1000;
+                velocity1 = velocitydisplay;
+                this.Invoke((MethodInvoker)delegate ()
                 {
-                    case noControl:
-                        controlAction = 129;
-                        break;
+                    VelCount.Text = velocitydisplay.ToString();
+                });
 
-                    case openLoop:
-                        controlAction = OLSpeed;
-                        break;
+                acceldisplay = (velocity1 - velocity2) / 50 * 1000;
 
-                    case closedLoop:
-                        switch (PIDMode)
-                        {
-                            case position:
-                                setpoint = posSet;
-                                //error = setpoint - currentCountVal
-                                break;
+                this.Invoke((MethodInvoker)delegate ()
+                {
+                    AccCount.Text = acceldisplay.ToString();
+                });
 
-                            case velocity:
-                                //setpoint = box;
-                                //current = DecTickNew;
-                                break;
+                velocity2 = velocity1;
+                //Thread.Sleep(10);
+            }
+        }
 
-                            case acceleration:
-                                break;
-                        }
+        //Thread c
+      /*  private void Calculate_Accel()
+        {
 
-                        // General PID error calcs
-                        //error = setpoint - current;
-                        iError = prevError + error;
-                        dError = error - prevError;
-                        // 
-                        prevError = error;
-                        //
-                        //
-                        controlAction = (byte)(Kp * error + Ki * iError + Kd * dError);
+            while (AccCount.IsHandleCreated == false) { }
+            while (true)
+            {
 
 
-                        break;
-                    default:
-                        break;
+                velocity1 = velocitydisplay;
+                Thread.Sleep(50);
+                velocity2 = velocitydisplay;
 
-                }
-                
+                acceldisplay = (velocity1 - velocity2) / 50 * 1000;
+
+                this.Invoke((MethodInvoker)delegate ()
+                {
+                    AccCount.Text = acceldisplay.ToString();
+                });
+                //Thread.Sleep(20);
             }
         }*/
-
-        /*double PositionGraphCalc(double x)
-        {
-            return (Math.Abs(0.039885*x)+Math.Sin(2));
-            
-        }*/
-
-        /*private void Form1_Load(object sender, EventArgs e)
-        {
-            PositionGraph.ChartAreas[0].AxisY.ScaleView.Zoom(-15, 15); // -15<= y <=15
-            PositionGraph.ChartAreas[0].AxisX.ScaleView.Zoom(-15, 2); // -15 <= x <= 2
-            PositionGraph.ChartAreas[0].CursorX.IsUserEnabled = false;
-            PositionGraph.ChartAreas[0].CursorX.IsUserSelectionEnabled = false;
-            PositionGraph.ChartAreas[0].AxisX.ScaleView.Zoomable = true;
-            PositionGraph.Series[0].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            //for (int i = -15; i <2; i++)
-            //{
-            //    PositionGraph.Series[0].Points.AddXY(i, function(i));
-            //    PositionGraph.Series[0].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            //}
-        }*/
-
 
         // Set contol mode for the motor
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -444,8 +482,6 @@ namespace BluetoothGUISample
                     break;
                 case "Manual Motor Speed":
                     controlMode = openLoop;
-                    break;
-                case "Deadband Testing":
                     break;
                 case "Positional Control":
                     controlMode = closedLoop;

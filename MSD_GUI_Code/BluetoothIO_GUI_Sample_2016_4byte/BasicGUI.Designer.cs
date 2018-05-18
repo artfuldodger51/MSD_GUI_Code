@@ -56,8 +56,8 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.PositionGraph = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.VelocityGraph = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.chart3 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.AccelGraph = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.VelGraph = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.BitValue1 = new System.Windows.Forms.NumericUpDown();
             this.Troubleshooting = new System.Windows.Forms.GroupBox();
             this.TotalTicksLabel = new System.Windows.Forms.Label();
@@ -102,8 +102,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.NextVel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NextAcc)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PositionGraph)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.VelocityGraph)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chart3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.AccelGraph)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.VelGraph)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.BitValue1)).BeginInit();
             this.Troubleshooting.SuspendLayout();
             this.PID_Control.SuspendLayout();
@@ -288,6 +288,7 @@
             this.PositionGraph.Margin = new System.Windows.Forms.Padding(4);
             this.PositionGraph.Name = "PositionGraph";
             series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             this.PositionGraph.Series.Add(series1);
@@ -295,39 +296,41 @@
             this.PositionGraph.TabIndex = 16;
             this.PositionGraph.Text = "chart1";
             // 
-            // VelocityGraph
+            // AccelGraph
             // 
             chartArea2.Name = "ChartArea1";
-            this.VelocityGraph.ChartAreas.Add(chartArea2);
+            this.AccelGraph.ChartAreas.Add(chartArea2);
             legend2.Name = "Legend1";
-            this.VelocityGraph.Legends.Add(legend2);
-            this.VelocityGraph.Location = new System.Drawing.Point(1370, 492);
-            this.VelocityGraph.Margin = new System.Windows.Forms.Padding(4);
-            this.VelocityGraph.Name = "VelocityGraph";
+            this.AccelGraph.Legends.Add(legend2);
+            this.AccelGraph.Location = new System.Drawing.Point(1370, 492);
+            this.AccelGraph.Margin = new System.Windows.Forms.Padding(4);
+            this.AccelGraph.Name = "AccelGraph";
             series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
             series2.Legend = "Legend1";
             series2.Name = "Series1";
-            this.VelocityGraph.Series.Add(series2);
-            this.VelocityGraph.Size = new System.Drawing.Size(500, 400);
-            this.VelocityGraph.TabIndex = 17;
-            this.VelocityGraph.Text = "chart2";
+            this.AccelGraph.Series.Add(series2);
+            this.AccelGraph.Size = new System.Drawing.Size(500, 400);
+            this.AccelGraph.TabIndex = 17;
+            this.AccelGraph.Text = "chart2";
             // 
-            // chart3
+            // VelGraph
             // 
             chartArea3.Name = "ChartArea1";
-            this.chart3.ChartAreas.Add(chartArea3);
+            this.VelGraph.ChartAreas.Add(chartArea3);
             legend3.Name = "Legend1";
-            this.chart3.Legends.Add(legend3);
-            this.chart3.Location = new System.Drawing.Point(1370, 67);
-            this.chart3.Margin = new System.Windows.Forms.Padding(4);
-            this.chart3.Name = "chart3";
+            this.VelGraph.Legends.Add(legend3);
+            this.VelGraph.Location = new System.Drawing.Point(1370, 67);
+            this.VelGraph.Margin = new System.Windows.Forms.Padding(4);
+            this.VelGraph.Name = "VelGraph";
             series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
             series3.Legend = "Legend1";
             series3.Name = "Series1";
-            this.chart3.Series.Add(series3);
-            this.chart3.Size = new System.Drawing.Size(500, 400);
-            this.chart3.TabIndex = 18;
-            this.chart3.Text = "chart3";
+            this.VelGraph.Series.Add(series3);
+            this.VelGraph.Size = new System.Drawing.Size(500, 400);
+            this.VelGraph.TabIndex = 18;
+            this.VelGraph.Text = "chart3";
             // 
             // BitValue1
             // 
@@ -811,8 +814,8 @@
             this.Controls.Add(this.PID_Control);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.Troubleshooting);
-            this.Controls.Add(this.chart3);
-            this.Controls.Add(this.VelocityGraph);
+            this.Controls.Add(this.VelGraph);
+            this.Controls.Add(this.AccelGraph);
             this.Controls.Add(this.PositionGraph);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
@@ -823,8 +826,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.NextVel)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NextAcc)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PositionGraph)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.VelocityGraph)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chart3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.AccelGraph)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.VelGraph)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.BitValue1)).EndInit();
             this.Troubleshooting.ResumeLayout(false);
             this.Troubleshooting.PerformLayout();
@@ -866,8 +869,8 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.DataVisualization.Charting.Chart PositionGraph;
-        private System.Windows.Forms.DataVisualization.Charting.Chart VelocityGraph;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chart3;
+        private System.Windows.Forms.DataVisualization.Charting.Chart AccelGraph;
+        private System.Windows.Forms.DataVisualization.Charting.Chart VelGraph;
         private System.Windows.Forms.NumericUpDown BitValue1;
         private System.Windows.Forms.GroupBox Troubleshooting;
         private System.Windows.Forms.Label label7;
