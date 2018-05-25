@@ -33,6 +33,9 @@ namespace BluetoothGUISample
         int Lowbyte = 0;
         int Highbyte = 0;
         int var = 0;
+        int GraphNum = 0;
+        int arraynum = 0;
+        int i = 0;
 
         // Circumference of Decoder DIsc
         // 
@@ -49,13 +52,13 @@ namespace BluetoothGUISample
         const int openLoop = 1;
         const int closedLoop = 2;
         long time1 = 0;
-        float distance1 = 0;
-        float distance2 = 0;
-        float velocitydisplay = 0;
-        float acceldisplay = 0;
+        double distance1 = 0;
+        double distance2 = 0;
+        double velocitydisplay = 0;
+        double acceldisplay = 0;
 
-        float velocity1 = 0;
-        float velocity2 = 0;
+        double velocity1 = 0;
+        double velocity2 = 0;
 
         int PIDMode = 0;
         const int position = 0;
@@ -63,21 +66,20 @@ namespace BluetoothGUISample
         const int acceleration = 2;
 
         // PID variables
-        int runningTime = 0;
-        float posSet = 0;
-        float velSet = 0;
-        float accSet = 0;
-        float setpoint = 0;
-        float SettingValue = 0;
 
-        float pError = 0;
-        float iError = 0;
-        float dError = 0;
-        float prevError = 0;
+        double posSet = 0;
+        double velSet = 0;
+        double accSet = 0;
+        double setpoint = 0;
+        double SettingValue = 0;
+        double pError = 0;
+        double iError = 0;
+        double dError = 0;
+        double prevError = 0;
 
-        float Kp = 200;
-        float Ki = 200;
-        float Kd = 200;
+        double Kp = 200;
+        double Ki = 0.002;
+        double Kd = 0.02;
         
 
         byte controlAction = 0;
@@ -147,29 +149,6 @@ namespace BluetoothGUISample
         private void button2_Click(object sender, EventArgs e) //Press the button to send the value to Output 1, Arduino Port A.
         {
             SendIO(0, 0);
-            if (DeadbandBox.Checked == true)
-            {
-                if (BitValue1.Value < 150 & BitValue1.Value > 127)
-                {
-                    BitVal1 = 150;
-                    SendIO(1, (byte)BitVal1); // The value 1 indicates troubleshooting box 1.}
-                }
-                else if (BitValue1.Value < 127 & BitValue1.Value > 107)
-                {
-                    BitVal1 = 107;
-                    SendIO(1, (byte)BitVal1); // The value 1 indicates troubleshooting box 1.}
-                }
-                
-                else 
-                {
-                    SendIO(1, (byte)BitValue1.Value); // The value 1 indicates troubleshooting box 1.
-                }
-            }
-
-            else if (DeadbandBox.Checked == false)
-            {
-                SendIO(1, (byte)BitValue1.Value); // The value 1 indicates troubleshooting box 1.}
-            }
 
         }
         // Distance Changer Button
@@ -264,82 +243,101 @@ namespace BluetoothGUISample
                         break;
 
                     case closedLoop:
-                        switch (PIDMode)
-                        {
-                            case position:
-                                setpoint = posSet;
-                                pError = (setpoint - TotalTicks);
-                                break;
-
-                            case velocity:
-                                //setpoint = box;
-                                //current = DecTickNew;
-                                break;
-
-                            case acceleration:
-                                break;
-                        }
 
 
                         //
                         // http://robotsforroboticists.com/pid-control/
                         // https://tutorial.cytron.io/2012/06/22/pid-for-embedded-design/
                         //
-
-                        // PID Control
-                        pError = posSet + TotalTicks;
-                        iError = iError + pError;
-                        dError = pError - prevError;
-                        prevError = pError;
-
-                        if (pError <= 1000 && pError >= -1000)
+                        switch (PIDMode)
                         {
-                            SettingValue = ((Kp / 1000 * pError + Ki / 1000 * iError + Kd / 1000 * dError) + 127);
-                            if (SettingValue > 150)
-                                SettingValue = 150;
-                            else if (SettingValue < 100)
-                                SettingValue = 100;
+                            // PID Control
+                            case position:
+                                pError = posSet + TotalTicks;
+                                break;
 
-                            controlAction = (byte)SettingValue;
+                            case velocity:
+                                pError = velSet + velocitydisplay;
+                                break;
+
                         }
+                            iError = (iError + pError)/2;
+                            dError = pError - prevError;
+                            prevError = pError;
 
-                        else if (pError <= 20000 && pError >= -20000)
-                        {
-                            SettingValue = ((Kp / 1000 * pError + Ki / 1000 * iError + Kd / 1000 * dError) + 127);
-                            if (SettingValue > 200)
-                                SettingValue = 200;
-                            else if (SettingValue < 55)
-                                SettingValue = 55;
+                            Debug.WriteLine("-------------------------------------------------");
+                            Debug.WriteLine("Error:");
+                            Debug.WriteLine(pError);
+                            Debug.WriteLine("IError:");
+                            Debug.WriteLine(iError);
+                            Debug.WriteLine("dError:");
+                            Debug.WriteLine(dError);
 
+                            if (pError <= 150 && pError >= -150)
+                            {
+                                    SettingValue = 127;
+                            }
+
+                            if (pError <= 1500 && pError >= -1500)
+                            {
+
+                                SettingValue = ((Kp / 1000 * -pError + Ki / 1000 * -iError + Kd / 1000 * -dError) + 127);
+                                if (SettingValue > 135)
+                                    SettingValue = 135;
+                                else if (SettingValue < 120)
+                                    SettingValue = 120;
+
+
+                            }
+
+                            else if (pError <= 10000 && pError >= -10000)
+                            {
+
+                                SettingValue = ((Kp / 1000 * -pError + Ki / 1000 * -iError + Kd / 1000 * -dError) + 127);
+                                if (SettingValue > 150)
+                                    SettingValue = 150;
+                                else if (SettingValue < 100)
+                                    SettingValue = 100;
+
+                            
+                            }
+
+                            else if (pError <= 200000 && pError >= -200000)
+                            {
+                                SettingValue = ((Kp / 1000 * -pError + Ki / 1000 * -iError + Kd / 1000 * -dError) + 127);
+                                if (SettingValue > 200)
+                                    SettingValue = 200;
+                                else if (SettingValue < 55)
+                                    SettingValue = 55;
+
+
+                            }
+
+                            else
+                            {
+
+                                SettingValue = ((Kp / 1000 * -pError + Ki / 1000 * -iError + Kd / 1000 * -dError) + 127);
+
+                                Debug.WriteLine("SettingValue:");
+                                Debug.WriteLine(SettingValue);
+                                if (SettingValue > 255)
+                                    SettingValue = 255;
+                                else if (SettingValue < 0)
+                                    SettingValue = 0;
+
+                            
+                            }
                             controlAction = (byte)SettingValue;
-                        }
-
-                        else
-                        {
-                            SettingValue = ((Kp / 1000 * pError + Ki / 1000 * iError + Kd / 1000 * dError) + 127);
-                            if (SettingValue > 255)
-                                SettingValue = 255;
-                            else if (SettingValue < 0)
-                                SettingValue = 0;
-
-                            controlAction = (byte)SettingValue;
-                        }
 
 
-                        Debug.WriteLine("-------------------------------------------------");
-                        Debug.WriteLine("Error:");
-                        Debug.WriteLine(pError);
-                        Debug.WriteLine("IError:");
-                        Debug.WriteLine(iError);
-                        Debug.WriteLine("dError:");
-                        Debug.WriteLine(dError);
-                        Debug.WriteLine("ControlAction:");
-                        Debug.WriteLine(controlAction);
-                        
+                            Debug.WriteLine("ControlAction:");
+                            Debug.WriteLine(controlAction);
 
-                        break;
-                    default:
-                        break;
+
+
+                            break;
+                        default:
+                            break;
 
                 }
 
@@ -392,6 +390,8 @@ namespace BluetoothGUISample
         //Thread d
         private void Graph_Stuff()
         {
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
             //Thread.Sleep(4000);
             while (VelGraph.IsHandleCreated == false) { }
             while (true)
@@ -399,12 +399,27 @@ namespace BluetoothGUISample
                 Thread.Sleep(100);
                 this.Invoke((MethodInvoker)delegate ()
                 {
-                    PositionGraph.Series[0].Points.AddXY(time1 / 1000, TotalTicks);
-                    PositionGraph.ChartAreas[0].AxisX.ScaleView.Zoom(time1 / 1000 - 20, time1 / 1000); // -15 <= x <= 2
-                    VelGraph.Series[0].Points.AddXY(time1 / 1000, velocitydisplay);
-                    VelGraph.ChartAreas[0].AxisX.ScaleView.Zoom(time1 / 1000 - 20, time1 / 1000); // -15 <= x <= 2
-                    AccelGraph.Series[0].Points.AddXY(time1 / 1000, acceldisplay);
-                    AccelGraph.ChartAreas[0].AxisX.ScaleView.Zoom(time1 / 1000 - 20, time1 / 1000); // -15 <= x <= 2
+                    time1 = watch.ElapsedMilliseconds;
+                    PositionGraph.Series[0].Points.AddXY(time1 / 1000.0, TotalTicks);
+                    //PositionGraph.ChartAreas[0].AxisX.ScaleView.Zoom(time1 / 1000.0 - 10, time1 / 1000.0); // -15 <= x <= 2
+                    //PositionGraph.ChartAreas[0].AxisY.ScaleView.Zoom(TotalTicks - 30000, TotalTicks + 30000);
+                    VelGraph.Series[0].Points.AddXY(time1 / 1000.0, velocitydisplay);
+                    //VelGraph.ChartAreas[0].AxisX.ScaleView.Zoom(time1 / 1000.0 - 10, time1 / 1000.0); // -15 <= x <= 2
+                    AccelGraph.Series[0].Points.AddXY(time1 / 1000.0, acceldisplay);
+                    //AccelGraph.ChartAreas[0].AxisX.ScaleView.Zoom(time1 / 1000.0 - 10, time1 / 1000.0); // -15 <= x <= 2
+                    if (PositionGraph.Series[0].Points.Count() > 20)
+                    {
+                        PositionGraph.Series[0].Points.RemoveAt(0);
+                        VelGraph.Series[0].Points.RemoveAt(0);
+                        AccelGraph.Series[0].Points.RemoveAt(0);
+                    }
+
+                    PositionGraph.ResetAutoValues();
+                    VelGraph.ResetAutoValues();
+                    AccelGraph.ResetAutoValues();
+
+
+
                 });
 
                 
@@ -417,19 +432,30 @@ namespace BluetoothGUISample
         //Thread b
         private void Calculate_Velocity()
         {
+            double j = 0;
+            double[] velocityarray = new double[10];
             //Thread.Sleep(4000);
-            Stopwatch watch = new Stopwatch();
-            watch.Start();
+            Stopwatch watch2 = new Stopwatch();
+            watch2.Start();
+
             while (VelCount.IsHandleCreated == false) { }
             while (true)
             {
 
-                time1 = watch.ElapsedMilliseconds;
+                
                 distance1 = TotalTicks;
                 Thread.Sleep(50);
                 distance2 = TotalTicks;
                 velocitydisplay = (distance2 - distance1) / 50 * 1000;
+                velocityarray[arraynum] = velocitydisplay;
                 velocity1 = velocitydisplay;
+                for (i = 0; i < 10; i++)
+                {
+                    j += velocityarray[i];
+                }
+                velocitydisplay = j / 10;
+                j = 0;
+
                 this.Invoke((MethodInvoker)delegate ()
                 {
                     VelCount.Text = velocitydisplay.ToString();
@@ -441,8 +467,10 @@ namespace BluetoothGUISample
                 {
                     AccCount.Text = acceldisplay.ToString();
                 });
-
+                if (arraynum == 9)
+                    arraynum = 0;
                 velocity2 = velocity1;
+                arraynum++;
                 //Thread.Sleep(10);
             }
         }
@@ -536,7 +564,7 @@ namespace BluetoothGUISample
 
         private void KPButt_Click(object sender, EventArgs e)
         {
-            Kp = (float)KdRoll.Value;
+            Kp = (float)KPRoll.Value;
         }
 
         private void KIButt_Click(object sender, EventArgs e)
@@ -557,7 +585,7 @@ namespace BluetoothGUISample
         private void PosButton_Click_1(object sender, EventArgs e)
         {
             if (PosRadio.Checked == true)
-                posSet = (int)NextPos.Value;
+                posSet = -(int)NextPos.Value;
         }
 
         private void VelButton_Click_1(object sender, EventArgs e)
@@ -575,13 +603,13 @@ namespace BluetoothGUISample
         private void OLSpeedSlide_Scroll(object sender, EventArgs e)
         {
             OLSpeedRoll.Value = OLSpeedSlide.Value;
-            OLSpeed = (byte)((OLSpeedRoll.Value + 100) / 200 * 255);
+            OLSpeed = (byte)((OLSpeedRoll.Value));// + 100) / 200 * 255);
         }
 
         private void OLSpeedRoll_ValueChanged(object sender, EventArgs e)
         {
             OLSpeedSlide.Value = (int)OLSpeedRoll.Value;
-            OLSpeed = (byte)((OLSpeedSlide.Value + 100) / 200 * 255);
+            OLSpeed = (byte)((OLSpeedSlide.Value + 100) / 200.0 * 255);
         }
 
 

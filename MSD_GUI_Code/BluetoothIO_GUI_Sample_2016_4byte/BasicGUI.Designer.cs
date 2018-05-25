@@ -98,6 +98,9 @@
             this.KPButt = new System.Windows.Forms.Button();
             this.KDButt = new System.Windows.Forms.Button();
             this.KdRoll = new System.Windows.Forms.NumericUpDown();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.NextPos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NextVel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NextAcc)).BeginInit();
@@ -119,7 +122,7 @@
             // 
             // bluetooth
             // 
-            this.bluetooth.PortName = "COM4";
+            this.bluetooth.PortName = "COM5";
             // 
             // getIOtimer
             // 
@@ -132,10 +135,15 @@
             this.NextPos.Location = new System.Drawing.Point(182, 71);
             this.NextPos.Margin = new System.Windows.Forms.Padding(6);
             this.NextPos.Maximum = new decimal(new int[] {
-            255,
+            1000000,
             0,
             0,
             0});
+            this.NextPos.Minimum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            -2147483648});
             this.NextPos.Name = "NextPos";
             this.NextPos.Size = new System.Drawing.Size(238, 31);
             this.NextPos.TabIndex = 3;
@@ -167,10 +175,15 @@
             this.NextVel.Location = new System.Drawing.Point(178, 175);
             this.NextVel.Margin = new System.Windows.Forms.Padding(6);
             this.NextVel.Maximum = new decimal(new int[] {
-            255,
+            100000,
             0,
             0,
             0});
+            this.NextVel.Minimum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            -2147483648});
             this.NextVel.Name = "NextVel";
             this.NextVel.Size = new System.Drawing.Size(250, 31);
             this.NextVel.TabIndex = 3;
@@ -282,17 +295,20 @@
             // 
             chartArea1.Name = "ChartArea1";
             this.PositionGraph.ChartAreas.Add(chartArea1);
+            legend1.Enabled = false;
             legend1.Name = "Legend1";
             this.PositionGraph.Legends.Add(legend1);
-            this.PositionGraph.Location = new System.Drawing.Point(836, 67);
+            this.PositionGraph.Location = new System.Drawing.Point(836, 40);
             this.PositionGraph.Margin = new System.Windows.Forms.Padding(4);
             this.PositionGraph.Name = "PositionGraph";
+            series1.BorderWidth = 4;
             series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series1.Color = System.Drawing.Color.Red;
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             this.PositionGraph.Series.Add(series1);
-            this.PositionGraph.Size = new System.Drawing.Size(500, 400);
+            this.PositionGraph.Size = new System.Drawing.Size(1298, 404);
             this.PositionGraph.TabIndex = 16;
             this.PositionGraph.Text = "chart1";
             // 
@@ -300,17 +316,20 @@
             // 
             chartArea2.Name = "ChartArea1";
             this.AccelGraph.ChartAreas.Add(chartArea2);
+            legend2.Enabled = false;
             legend2.Name = "Legend1";
             this.AccelGraph.Legends.Add(legend2);
-            this.AccelGraph.Location = new System.Drawing.Point(1370, 492);
-            this.AccelGraph.Margin = new System.Windows.Forms.Padding(4);
+            this.AccelGraph.Location = new System.Drawing.Point(836, 977);
+            this.AccelGraph.Margin = new System.Windows.Forms.Padding(1, 4, 4, 4);
             this.AccelGraph.Name = "AccelGraph";
+            series2.BorderWidth = 4;
             series2.ChartArea = "ChartArea1";
             series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series2.Color = System.Drawing.Color.Red;
             series2.Legend = "Legend1";
             series2.Name = "Series1";
             this.AccelGraph.Series.Add(series2);
-            this.AccelGraph.Size = new System.Drawing.Size(500, 400);
+            this.AccelGraph.Size = new System.Drawing.Size(1298, 425);
             this.AccelGraph.TabIndex = 17;
             this.AccelGraph.Text = "chart2";
             // 
@@ -318,17 +337,20 @@
             // 
             chartArea3.Name = "ChartArea1";
             this.VelGraph.ChartAreas.Add(chartArea3);
+            legend3.Enabled = false;
             legend3.Name = "Legend1";
             this.VelGraph.Legends.Add(legend3);
-            this.VelGraph.Location = new System.Drawing.Point(1370, 67);
+            this.VelGraph.Location = new System.Drawing.Point(836, 494);
             this.VelGraph.Margin = new System.Windows.Forms.Padding(4);
             this.VelGraph.Name = "VelGraph";
+            series3.BorderWidth = 4;
             series3.ChartArea = "ChartArea1";
             series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series3.Color = System.Drawing.Color.Red;
             series3.Legend = "Legend1";
             series3.Name = "Series1";
             this.VelGraph.Series.Add(series3);
-            this.VelGraph.Size = new System.Drawing.Size(500, 400);
+            this.VelGraph.Size = new System.Drawing.Size(1298, 415);
             this.VelGraph.TabIndex = 18;
             this.VelGraph.Text = "chart3";
             // 
@@ -446,7 +468,7 @@
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1912, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(2415, 24);
             this.menuStrip1.TabIndex = 22;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -554,7 +576,7 @@
             this.Current_readings.Controls.Add(this.label3);
             this.Current_readings.Controls.Add(this.AccRad);
             this.Current_readings.Controls.Add(this.PosRad);
-            this.Current_readings.Location = new System.Drawing.Point(772, 629);
+            this.Current_readings.Location = new System.Drawing.Point(32, 952);
             this.Current_readings.Margin = new System.Windows.Forms.Padding(6);
             this.Current_readings.Name = "Current_readings";
             this.Current_readings.Padding = new System.Windows.Forms.Padding(6);
@@ -658,8 +680,13 @@
             // 
             this.OLSpeedRoll.Location = new System.Drawing.Point(10, 56);
             this.OLSpeedRoll.Margin = new System.Windows.Forms.Padding(4);
+            this.OLSpeedRoll.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
             this.OLSpeedRoll.Minimum = new decimal(new int[] {
-            100,
+            255,
             0,
             0,
             -2147483648});
@@ -672,8 +699,7 @@
             // 
             this.OLSpeedSlide.Location = new System.Drawing.Point(190, 33);
             this.OLSpeedSlide.Margin = new System.Windows.Forms.Padding(6);
-            this.OLSpeedSlide.Maximum = 100;
-            this.OLSpeedSlide.Minimum = -100;
+            this.OLSpeedSlide.Maximum = 255;
             this.OLSpeedSlide.Name = "OLSpeedSlide";
             this.OLSpeedSlide.Size = new System.Drawing.Size(208, 90);
             this.OLSpeedSlide.TabIndex = 0;
@@ -701,6 +727,7 @@
             // 
             // KPRoll
             // 
+            this.KPRoll.DecimalPlaces = 5;
             this.KPRoll.Location = new System.Drawing.Point(8, 56);
             this.KPRoll.Margin = new System.Windows.Forms.Padding(6);
             this.KPRoll.Maximum = new decimal(new int[] {
@@ -746,6 +773,7 @@
             // 
             // KIRoll
             // 
+            this.KIRoll.DecimalPlaces = 6;
             this.KIRoll.Location = new System.Drawing.Point(4, 156);
             this.KIRoll.Margin = new System.Windows.Forms.Padding(6);
             this.KIRoll.Maximum = new decimal(new int[] {
@@ -791,6 +819,7 @@
             // 
             // KdRoll
             // 
+            this.KdRoll.DecimalPlaces = 5;
             this.KdRoll.Location = new System.Drawing.Point(4, 252);
             this.KdRoll.Margin = new System.Windows.Forms.Padding(4);
             this.KdRoll.Maximum = new decimal(new int[] {
@@ -802,11 +831,41 @@
             this.KdRoll.Size = new System.Drawing.Size(142, 31);
             this.KdRoll.TabIndex = 20;
             // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(836, 8);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(142, 25);
+            this.label16.TabIndex = 29;
+            this.label16.Text = "Displacement";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(836, 462);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(88, 25);
+            this.label17.TabIndex = 30;
+            this.label17.Text = "Velocity";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(836, 945);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(131, 25);
+            this.label18.TabIndex = 31;
+            this.label18.Text = "Acceleration";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1912, 1037);
+            this.ClientSize = new System.Drawing.Size(2415, 1404);
+            this.Controls.Add(this.label18);
+            this.Controls.Add(this.label17);
+            this.Controls.Add(this.label16);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.Current_readings);
@@ -911,6 +970,9 @@
         private System.Windows.Forms.RadioButton AccRadio;
         private System.Windows.Forms.RadioButton VelRadio;
         private System.Windows.Forms.RadioButton PosRadio;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label18;
     }
 }
 
