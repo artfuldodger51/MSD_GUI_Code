@@ -49,6 +49,7 @@ namespace BluetoothGUISample
         const int openLoop = 1;
         const int closedLoop = 2;
         long time1 = 0;
+        long time2 = 0;
         float distance1 = 0;
         float distance2 = 0;
         float velocitydisplay = 0;
@@ -96,18 +97,7 @@ namespace BluetoothGUISample
 
             
 
-            // Do all Tick calculations in a seperate thread.
-            Thread t = new Thread(CalculateTicks);
-            t.Start();
-
-            Thread b = new Thread(Calculate_Velocity);
-            b.Start();
-
-            //Thread c = new Thread(Calculate_Accel);
-            //c.Start();
-
-            Thread d = new Thread(Graph_Stuff);
-            d.Start();
+            
             // Mode Thread
             //Thread g = new Thread(SetControl);
             //g.Start();
@@ -128,6 +118,8 @@ namespace BluetoothGUISample
                     }
                 }
             }
+            Thread d = new Thread(Graph_Stuff);
+            d.Start();
         }
         
         // Send a four byte message to the Arduino via serial.
@@ -207,268 +199,214 @@ namespace BluetoothGUISample
         private void getIOtimer_Tick(object sender, EventArgs e) //It is best to continuously check for incoming data as handling the buffer or waiting for event is not practical in C#.
         {
 
-            if (bluetooth.IsOpen) //Check that a serial connection exists.
+            Debug.WriteLine("time1:");
+            Debug.WriteLine(time1);
+            
+            PositionGraph.Series[0].Points.AddXY(time1 / 1000.0, TotalTicks);
+            if (PositionGraph.Series[0].Points.Count() > 20)
             {
-
-                // READ DATA FROM THE ARDUINO
-                //-----------------------------------------------------------------------------------------------------------
-                if (bluetooth.BytesToRead >= 4) //Check that the buffer contains a full four byte package.
-                {
-                    //if (bluetooth.BytesToRead >= 16)
-                    //    var++;
-                    Inputs[0] = (byte)bluetooth.ReadByte(); //Read the first byte of the package.
-
-                    if (Inputs[0] == START) //Check that the first byte is in fact the start byte.
-                    {
-                        time++;
-
-                        //Read the rest of the package.
-                        Inputs[1] = (byte)bluetooth.ReadByte(); // Low Data Byte
-                        Inputs[2] = (byte)bluetooth.ReadByte(); // High Data byte (The byte thats useful)
-                        Inputs[3] = (byte)bluetooth.ReadByte(); // Checksum Byte 
-                        
-
-                        Lowbyte = Inputs[1];
-                        Highbyte = Inputs[2];
-
-                        DecTickNew = Lowbyte + 256 * Highbyte;
-
-
-                        Diff = DecTickNew - DecTickOld;
-
-
-                        if (Diff > 30000)
-                        { Diff = 1; }
-
-                        else if (Diff < -30000)
-                        { Diff = -1; }
-
-                        DecTickOld = DecTickNew;
-                        TotalTicks += Diff;
-
-
-                    }
-                }
-
-                // Do adjustments for Control Settings in a seperate thread to remove lag
-
-
-                switch (controlMode)
-                {
-                    case noControl:
-                        controlAction = 129;
-                        break;
-
-                    case openLoop:
-                        controlAction = OLSpeed;
-                        break;
-
-                    case closedLoop:
-                        switch (PIDMode)
-                        {
-                            case position:
-                                setpoint = posSet;
-                                pError = (setpoint - TotalTicks);
-                                break;
-
-                            case velocity:
-                                //setpoint = box;
-                                //current = DecTickNew;
-                                break;
-
-                            case acceleration:
-                                break;
-                        }
-
-
-                        //
-                        // http://robotsforroboticists.com/pid-control/
-                        // https://tutorial.cytron.io/2012/06/22/pid-for-embedded-design/
-                        //
-
-                        // PID Control
-                        pError = posSet + TotalTicks;
-                        iError = iError + pError;
-                        dError = pError - prevError;
-                        prevError = pError;
-
-                        if (pError <= 1000 && pError >= -1000)
-                        {
-                            SettingValue = ((Kp / 1000 * pError + Ki / 1000 * iError + Kd / 1000 * dError) + 127);
-                            if (SettingValue > 150)
-                                SettingValue = 150;
-                            else if (SettingValue < 100)
-                                SettingValue = 100;
-
-                            controlAction = (byte)SettingValue;
-                        }
-
-                        else if (pError <= 20000 && pError >= -20000)
-                        {
-                            SettingValue = ((Kp / 1000 * pError + Ki / 1000 * iError + Kd / 1000 * dError) + 127);
-                            if (SettingValue > 200)
-                                SettingValue = 200;
-                            else if (SettingValue < 55)
-                                SettingValue = 55;
-
-                            controlAction = (byte)SettingValue;
-                        }
-
-                        else
-                        {
-                            SettingValue = ((Kp / 1000 * pError + Ki / 1000 * iError + Kd / 1000 * dError) + 127);
-                            if (SettingValue > 255)
-                                SettingValue = 255;
-                            else if (SettingValue < 0)
-                                SettingValue = 0;
-
-                            controlAction = (byte)SettingValue;
-                        }
-
-
-                        Debug.WriteLine("-------------------------------------------------");
-                        Debug.WriteLine("Error:");
-                        Debug.WriteLine(pError);
-                        Debug.WriteLine("IError:");
-                        Debug.WriteLine(iError);
-                        Debug.WriteLine("dError:");
-                        Debug.WriteLine(dError);
-                        Debug.WriteLine("ControlAction:");
-                        Debug.WriteLine(controlAction);
-                        
-
-                        break;
-                    default:
-                        break;
-
-                }
-
-
-                SendIO(1, controlAction);
-                SendIO(2, 0);
-                //Debug.WriteLine("DAC Value");
-                //Debug.WriteLine(controlAction);
-
-
+                PositionGraph.Series[0].Points.RemoveAt(0);
+                VelGraph.Series[0].Points.RemoveAt(0);
+                AccelGraph.Series[0].Points.RemoveAt(0);
             }
+            PositionGraph.ResetAutoValues();
+            VelGraph.ResetAutoValues();
+            AccelGraph.ResetAutoValues();
+
+            
+            VelGraph.Series[0].Points.AddXY(time1 / 1000.0, velocitydisplay);
+            //VelGraph.ChartAreas[0].AxisX.ScaleView.Zoom(time1 / 1000 - 20, time1 / 1000); // -15 <= x <= 2
+            AccelGraph.Series[0].Points.AddXY(time1 / 1000.0, acceldisplay);
+           // AccelGraph.ChartAreas[0].AxisX.ScaleView.Zoom(time1 / 1000 - 20, time1 / 1000); // -15 <= x <= 2
+            
+            TotalTicksBox.Text = TotalTicks.ToString();
+            VelCount.Text = velocitydisplay.ToString();
+            AccCount.Text = acceldisplay.ToString();
+             
+            
 
          }
-
-        //Thread t - Count Ticks
-        private void CalculateTicks()
+        private void Form1_Closed(object sender, System.EventArgs e)
         {
-            //Thread.Sleep(4000);
-            while (TotalTicksBox.IsHandleCreated == false) { }
-            while (true)
-            {
-                //Debug.WriteLine(Lowbyte);
-                //Debug.WriteLine(Highbyte);
-                /* DecTickNew = Lowbyte + 256 * Highbyte;
+            runBluetooth = false;
+            SendIO(1, 127);
+        }
 
-
-                 Diff = DecTickNew - DecTickOld;
-
-
-                 if (Diff > 30000)
-                 { Diff = 1; }
-
-                 else if (Diff < -30000)
-                 { Diff = -1; }
-
-                 DecTickOld = DecTickNew;
-                 TotalTicks += Diff;
-                 //Debug.WriteLine(Lowbyte);*/
-                Thread.Sleep(50);
-                this.Invoke((MethodInvoker)delegate ()
-                {
-                    TotalTicksBox.Text = TotalTicks.ToString();
-                });
-
-
-
-            }
-        } 
 
         //Thread d
         private void Graph_Stuff()
         {
-            //Thread.Sleep(4000);
-            while (VelGraph.IsHandleCreated == false) { }
-            while (true)
-            {
-                Thread.Sleep(100);
-                this.Invoke((MethodInvoker)delegate ()
-                {
-                    PositionGraph.Series[0].Points.AddXY(time1 / 1000, TotalTicks);
-                    PositionGraph.ChartAreas[0].AxisX.ScaleView.Zoom(time1 / 1000 - 20, time1 / 1000); // -15 <= x <= 2
-                    VelGraph.Series[0].Points.AddXY(time1 / 1000, velocitydisplay);
-                    VelGraph.ChartAreas[0].AxisX.ScaleView.Zoom(time1 / 1000 - 20, time1 / 1000); // -15 <= x <= 2
-                    AccelGraph.Series[0].Points.AddXY(time1 / 1000, acceldisplay);
-                    AccelGraph.ChartAreas[0].AxisX.ScaleView.Zoom(time1 / 1000 - 20, time1 / 1000); // -15 <= x <= 2
-                });
-
-                
-
-            }
-        }
-
-
-
-        //Thread b
-        private void Calculate_Velocity()
-        {
-            //Thread.Sleep(4000);
             Stopwatch watch = new Stopwatch();
             watch.Start();
-            while (VelCount.IsHandleCreated == false) { }
-            while (true)
+            //Thread.Sleep(4000);
+            while (VelGraph.IsHandleCreated == false) { }
+            while (runBluetooth)
             {
 
-                time1 = watch.ElapsedMilliseconds;
-                distance1 = TotalTicks;
-                Thread.Sleep(50);
-                distance2 = TotalTicks;
-                velocitydisplay = (distance2 - distance1) / 50 * 1000;
-                velocity1 = velocitydisplay;
-                this.Invoke((MethodInvoker)delegate ()
+
+
+                if (bluetooth.IsOpen) //Check that a serial connection exists.
                 {
-                    VelCount.Text = velocitydisplay.ToString();
-                });
 
-                acceldisplay = (velocity1 - velocity2) / 50 * 1000;
 
-                this.Invoke((MethodInvoker)delegate ()
-                {
-                    AccCount.Text = acceldisplay.ToString();
-                });
+                    // READ DATA FROM THE ARDUINO
+                    //-----------------------------------------------------------------------------------------------------------
+                    if (bluetooth.BytesToRead >= 4) //Check that the buffer contains a full four byte package.
+                    {
+                        //if (bluetooth.BytesToRead >= 16)
+                        //    var++;
+                        Inputs[0] = (byte)bluetooth.ReadByte(); //Read the first byte of the package.
 
-                velocity2 = velocity1;
-                //Thread.Sleep(10);
+                        if (Inputs[0] == START) //Check that the first byte is in fact the start byte.
+                        {
+                            time++;
+
+                            //Read the rest of the package.
+                            Inputs[1] = (byte)bluetooth.ReadByte(); // Low Data Byte
+                            Inputs[2] = (byte)bluetooth.ReadByte(); // High Data byte (The byte thats useful)
+                            Inputs[3] = (byte)bluetooth.ReadByte(); // Checksum Byte 
+
+
+                            Lowbyte = Inputs[1];
+                            Highbyte = Inputs[2];
+
+                            DecTickNew = Lowbyte + 256 * Highbyte;
+
+
+                            Diff = DecTickNew - DecTickOld;
+
+
+                            if (Diff > 30000)
+                            { Diff = 1; }
+
+                            else if (Diff < -30000)
+                            { Diff = -1; }
+
+                            DecTickOld = DecTickNew;
+                            TotalTicks += Diff;
+                      
+                            time1 = watch.ElapsedMilliseconds;
+                            distance1 = TotalTicks;
+
+                            velocitydisplay = (distance1 - distance2) / (time1 - time2) * 1000;
+                            velocity1 = velocitydisplay;
+
+                            acceldisplay = (velocity1 - velocity2) / 50 * 1000;
+
+                            time2 = time1;
+                            distance2 = distance1;
+                            velocity2 = velocity1;
+
+
+                        }
+                    }
+
+                    // Do adjustments for Control Settings in a seperate thread to remove lag
+
+
+                    switch (controlMode)
+                    {
+                        case noControl:
+                            controlAction = 129;
+                            break;
+
+                        case openLoop:
+                            controlAction = OLSpeed;
+                            break;
+
+                        case closedLoop:
+                            switch (PIDMode)
+                            {
+                                case position:
+                                    setpoint = posSet;
+                                    pError = (setpoint - TotalTicks);
+                                    break;
+
+                                case velocity:
+                                    //setpoint = box;
+                                    //current = DecTickNew;
+                                    break;
+
+                                case acceleration:
+                                    break;
+                            }
+
+
+                            //
+                            // http://robotsforroboticists.com/pid-control/
+                            // https://tutorial.cytron.io/2012/06/22/pid-for-embedded-design/
+                            //
+
+                            // PID Control
+                            pError = posSet + TotalTicks;
+                            iError = iError + pError;
+                            dError = pError - prevError;
+                            prevError = pError;
+
+                            if (pError <= 1000 && pError >= -1000)
+                            {
+                                SettingValue = ((Kp / 1000 * pError + Ki / 1000 * iError + Kd / 1000 * dError) + 127);
+                                if (SettingValue > 150)
+                                    SettingValue = 150;
+                                else if (SettingValue < 100)
+                                    SettingValue = 100;
+
+                                controlAction = (byte)SettingValue;
+                            }
+
+                            else if (pError <= 20000 && pError >= -20000)
+                            {
+                                SettingValue = ((Kp / 1000 * pError + Ki / 1000 * iError + Kd / 1000 * dError) + 127);
+                                if (SettingValue > 200)
+                                    SettingValue = 200;
+                                else if (SettingValue < 55)
+                                    SettingValue = 55;
+
+                                controlAction = (byte)SettingValue;
+                            }
+
+                            else
+                            {
+                                SettingValue = ((Kp / 1000 * pError + Ki / 1000 * iError + Kd / 1000 * dError) + 127);
+                                if (SettingValue > 255)
+                                    SettingValue = 255;
+                                else if (SettingValue < 0)
+                                    SettingValue = 0;
+
+                                controlAction = (byte)SettingValue;
+                            }
+
+
+                            Debug.WriteLine("-------------------------------------------------");
+                            Debug.WriteLine("Error:");
+                            Debug.WriteLine(pError);
+                            Debug.WriteLine("IError:");
+                            Debug.WriteLine(iError);
+                            Debug.WriteLine("dError:");
+                            Debug.WriteLine(dError);
+                            Debug.WriteLine("ControlAction:");
+                            Debug.WriteLine(controlAction);
+
+
+                            break;
+                        default:
+                            break;
+
+                    }
+
+
+                    SendIO(1, controlAction);
+                    SendIO(2, 0);
+                    //Debug.WriteLine("DAC Value");
+                    //Debug.WriteLine(controlAction);
+
+
+                }
+
             }
         }
 
-        //Thread c
-      /*  private void Calculate_Accel()
-        {
 
-            while (AccCount.IsHandleCreated == false) { }
-            while (true)
-            {
-
-
-                velocity1 = velocitydisplay;
-                Thread.Sleep(50);
-                velocity2 = velocitydisplay;
-
-                acceldisplay = (velocity1 - velocity2) / 50 * 1000;
-
-                this.Invoke((MethodInvoker)delegate ()
-                {
-                    AccCount.Text = acceldisplay.ToString();
-                });
-                //Thread.Sleep(20);
-            }
-        }*/
 
         // Set contol mode for the motor
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -491,10 +429,6 @@ namespace BluetoothGUISample
         }
    
 
-
-// ---------------------------------------------------------------------------------------------------------------- //
-// ------------------------------------------- PID CONTROL -------------------------------------------------------- //
-// ---------------------------------------------------------------------------------------------------------------- //
 
         // These 3 radio buttons select the PID control mode. Only 1 may be selected at a time. 
         private void PosRadio_CheckedChanged(object sender, EventArgs e)
@@ -536,7 +470,7 @@ namespace BluetoothGUISample
 
         private void KPButt_Click(object sender, EventArgs e)
         {
-            Kp = (float)KdRoll.Value;
+            Kp = (float)KPRoll.Value;
         }
 
         private void KIButt_Click(object sender, EventArgs e)
@@ -575,13 +509,18 @@ namespace BluetoothGUISample
         private void OLSpeedSlide_Scroll(object sender, EventArgs e)
         {
             OLSpeedRoll.Value = OLSpeedSlide.Value;
-            OLSpeed = (byte)((OLSpeedRoll.Value + 100) / 200 * 255);
+            OLSpeed = (byte)OLSpeedRoll.Value;
         }
 
         private void OLSpeedRoll_ValueChanged(object sender, EventArgs e)
         {
             OLSpeedSlide.Value = (int)OLSpeedRoll.Value;
-            OLSpeed = (byte)((OLSpeedSlide.Value + 100) / 200 * 255);
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
 
 

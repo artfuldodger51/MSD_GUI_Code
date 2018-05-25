@@ -1,0 +1,8 @@
+C:\Users\17064637\Documents\MSD_GUI_Code-new_gui_test\MSD_GUI_Code-new_gui_test\MSD_GUI_Code\BluetoothIO_GUI_Sample_2016_4byte\bin\Release\BluetoothIO.exe.config
+C:\Users\17064637\Documents\MSD_GUI_Code-new_gui_test\MSD_GUI_Code-new_gui_test\MSD_GUI_Code\BluetoothIO_GUI_Sample_2016_4byte\bin\Release\BluetoothIO.exe
+C:\Users\17064637\Documents\MSD_GUI_Code-new_gui_test\MSD_GUI_Code-new_gui_test\MSD_GUI_Code\BluetoothIO_GUI_Sample_2016_4byte\bin\Release\BluetoothIO.pdb
+C:\Users\17064637\Documents\MSD_GUI_Code-new_gui_test\MSD_GUI_Code-new_gui_test\MSD_GUI_Code\BluetoothIO_GUI_Sample_2016_4byte\obj\x86\Release\BluetoothGUISample.Form1.resources
+C:\Users\17064637\Documents\MSD_GUI_Code-new_gui_test\MSD_GUI_Code-new_gui_test\MSD_GUI_Code\BluetoothIO_GUI_Sample_2016_4byte\obj\x86\Release\BluetoothGUISample.Properties.Resources.resources
+C:\Users\17064637\Documents\MSD_GUI_Code-new_gui_test\MSD_GUI_Code-new_gui_test\MSD_GUI_Code\BluetoothIO_GUI_Sample_2016_4byte\obj\x86\Release\BluetoothIO_GUI_Sample_2016_4byte.csproj.GenerateResource.Cache
+C:\Users\17064637\Documents\MSD_GUI_Code-new_gui_test\MSD_GUI_Code-new_gui_test\MSD_GUI_Code\BluetoothIO_GUI_Sample_2016_4byte\obj\x86\Release\BluetoothIO.exe
+C:\Users\17064637\Documents\MSD_GUI_Code-new_gui_test\MSD_GUI_Code-new_gui_test\MSD_GUI_Code\BluetoothIO_GUI_Sample_2016_4byte\obj\x86\Release\BluetoothIO.pdb
