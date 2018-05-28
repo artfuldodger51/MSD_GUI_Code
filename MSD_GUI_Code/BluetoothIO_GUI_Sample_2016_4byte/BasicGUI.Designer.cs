@@ -29,15 +29,15 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.bluetooth = new System.IO.Ports.SerialPort(this.components);
             this.getIOtimer = new System.Windows.Forms.Timer(this.components);
             this.NextPos = new System.Windows.Forms.NumericUpDown();
@@ -122,12 +122,12 @@
             // 
             // bluetooth
             // 
-            this.bluetooth.PortName = "COM5";
+            this.bluetooth.PortName = "COM4";
             // 
             // getIOtimer
             // 
             this.getIOtimer.Enabled = true;
-            this.getIOtimer.Interval = 5;
+            this.getIOtimer.Interval = 40;
             this.getIOtimer.Tick += new System.EventHandler(this.getIOtimer_Tick);
             // 
             // NextPos
@@ -293,63 +293,63 @@
             // 
             // PositionGraph
             // 
-            chartArea1.Name = "ChartArea1";
-            this.PositionGraph.ChartAreas.Add(chartArea1);
-            legend1.Enabled = false;
-            legend1.Name = "Legend1";
-            this.PositionGraph.Legends.Add(legend1);
+            chartArea4.Name = "ChartArea1";
+            this.PositionGraph.ChartAreas.Add(chartArea4);
+            legend4.Enabled = false;
+            legend4.Name = "Legend1";
+            this.PositionGraph.Legends.Add(legend4);
             this.PositionGraph.Location = new System.Drawing.Point(836, 40);
             this.PositionGraph.Margin = new System.Windows.Forms.Padding(4);
             this.PositionGraph.Name = "PositionGraph";
-            series1.BorderWidth = 4;
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series1.Color = System.Drawing.Color.Red;
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.PositionGraph.Series.Add(series1);
+            series4.BorderWidth = 4;
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series4.Color = System.Drawing.Color.Red;
+            series4.Legend = "Legend1";
+            series4.Name = "Series1";
+            this.PositionGraph.Series.Add(series4);
             this.PositionGraph.Size = new System.Drawing.Size(1298, 404);
             this.PositionGraph.TabIndex = 16;
             this.PositionGraph.Text = "chart1";
             // 
             // AccelGraph
             // 
-            chartArea2.Name = "ChartArea1";
-            this.AccelGraph.ChartAreas.Add(chartArea2);
-            legend2.Enabled = false;
-            legend2.Name = "Legend1";
-            this.AccelGraph.Legends.Add(legend2);
+            chartArea5.Name = "ChartArea1";
+            this.AccelGraph.ChartAreas.Add(chartArea5);
+            legend5.Enabled = false;
+            legend5.Name = "Legend1";
+            this.AccelGraph.Legends.Add(legend5);
             this.AccelGraph.Location = new System.Drawing.Point(836, 977);
             this.AccelGraph.Margin = new System.Windows.Forms.Padding(1, 4, 4, 4);
             this.AccelGraph.Name = "AccelGraph";
-            series2.BorderWidth = 4;
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series2.Color = System.Drawing.Color.Red;
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            this.AccelGraph.Series.Add(series2);
+            series5.BorderWidth = 4;
+            series5.ChartArea = "ChartArea1";
+            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series5.Color = System.Drawing.Color.Red;
+            series5.Legend = "Legend1";
+            series5.Name = "Series1";
+            this.AccelGraph.Series.Add(series5);
             this.AccelGraph.Size = new System.Drawing.Size(1298, 425);
             this.AccelGraph.TabIndex = 17;
             this.AccelGraph.Text = "chart2";
             // 
             // VelGraph
             // 
-            chartArea3.Name = "ChartArea1";
-            this.VelGraph.ChartAreas.Add(chartArea3);
-            legend3.Enabled = false;
-            legend3.Name = "Legend1";
-            this.VelGraph.Legends.Add(legend3);
+            chartArea6.Name = "ChartArea1";
+            this.VelGraph.ChartAreas.Add(chartArea6);
+            legend6.Enabled = false;
+            legend6.Name = "Legend1";
+            this.VelGraph.Legends.Add(legend6);
             this.VelGraph.Location = new System.Drawing.Point(836, 494);
             this.VelGraph.Margin = new System.Windows.Forms.Padding(4);
             this.VelGraph.Name = "VelGraph";
-            series3.BorderWidth = 4;
-            series3.ChartArea = "ChartArea1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series3.Color = System.Drawing.Color.Red;
-            series3.Legend = "Legend1";
-            series3.Name = "Series1";
-            this.VelGraph.Series.Add(series3);
+            series6.BorderWidth = 4;
+            series6.ChartArea = "ChartArea1";
+            series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series6.Color = System.Drawing.Color.Red;
+            series6.Legend = "Legend1";
+            series6.Name = "Series1";
+            this.VelGraph.Series.Add(series6);
             this.VelGraph.Size = new System.Drawing.Size(1298, 415);
             this.VelGraph.TabIndex = 18;
             this.VelGraph.Text = "chart3";

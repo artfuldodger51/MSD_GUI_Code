@@ -48,3 +48,6 @@ C:\Users\artfu\Source\Repos\MSD_GUI_Code2\MSD_GUI_Code\BluetoothIO_GUI_Sample_20
 C:\Users\artfu\Source\Repos\MSD_GUI_Code2\MSD_GUI_Code\BluetoothIO_GUI_Sample_2016_4byte\obj\x86\Debug\BluetoothIO.exe
 C:\Users\artfu\Source\Repos\MSD_GUI_Code2\MSD_GUI_Code\BluetoothIO_GUI_Sample_2016_4byte\obj\x86\Debug\BluetoothIO.pdb
 C:\Users\artfu\Source\Repos\MSD_GUI_Code2\MSD_GUI_Code\BluetoothIO_GUI_Sample_2016_4byte\obj\x86\Debug\BluetoothIO_GUI_Sample_2016_4byte.csprojResolveAssemblyReference.cache
+C:\Users\artfu\Source\Repos\MSD_GUI_Code2\MSD_GUI_Code\BluetoothIO_GUI_Sample_2016_4byte\bin\Debug\CsvHelper.dll
+C:\Users\artfu\Source\Repos\MSD_GUI_Code2\MSD_GUI_Code\BluetoothIO_GUI_Sample_2016_4byte\bin\Debug\CsvHelper.xml
+C:\Users\artfu\Source\Repos\MSD_GUI_Code2\MSD_GUI_Code\BluetoothIO_GUI_Sample_2016_4byte\obj\x86\Debug\BluetoothIO_GUI_Sample_2016_4byte.csproj.CopyComplete

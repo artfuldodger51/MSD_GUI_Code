@@ -76,10 +76,11 @@ namespace BluetoothGUISample
         double iError = 0;
         double dError = 0;
         double prevError = 0;
+        double oldPosition = 0;
 
-        double Kp = 200;
-        double Ki = 0.002;
-        double Kd = 0.02;
+        double Kp = 0;
+        double Ki = 0;
+        double Kd = 0;
         
 
         byte controlAction = 0;
@@ -261,9 +262,16 @@ namespace BluetoothGUISample
                                 break;
 
                         }
-                            iError = (iError + pError)/2;
-                            dError = pError - prevError;
-                            prevError = pError;
+                        iError += pError;
+                        dError = prevError - pError;
+                        oldPosition = TotalTicks;
+                        prevError = pError;
+
+                        if (iError > 1000000)
+                            iError = 1000000;
+                        else if (iError < -1000000)
+                            iError = -1000000;
+
 
                             Debug.WriteLine("-------------------------------------------------");
                             Debug.WriteLine("Error:");
@@ -273,50 +281,40 @@ namespace BluetoothGUISample
                             Debug.WriteLine("dError:");
                             Debug.WriteLine(dError);
 
-                            if (pError <= 150 && pError >= -150)
-                            {
-                                    SettingValue = 127;
-                            }
 
                             if (pError <= 1500 && pError >= -1500)
                             {
 
-                                SettingValue = ((Kp / 1000 * -pError + Ki / 1000 * -iError + Kd / 1000 * -dError) + 127);
+                                SettingValue = ((Kp * -pError + Ki * -iError + Kd * -dError) + 127);
                                 if (SettingValue > 135)
                                     SettingValue = 135;
                                 else if (SettingValue < 120)
                                     SettingValue = 120;
-
-
                             }
 
                             else if (pError <= 10000 && pError >= -10000)
                             {
 
-                                SettingValue = ((Kp / 1000 * -pError + Ki / 1000 * -iError + Kd / 1000 * -dError) + 127);
+                                SettingValue = ((Kp * -pError + Ki * -iError + Kd * -dError) + 127);
                                 if (SettingValue > 150)
                                     SettingValue = 150;
                                 else if (SettingValue < 100)
                                     SettingValue = 100;
-
-                            
                             }
 
                             else if (pError <= 200000 && pError >= -200000)
                             {
-                                SettingValue = ((Kp / 1000 * -pError + Ki / 1000 * -iError + Kd / 1000 * -dError) + 127);
+                                SettingValue = ((Kp * -pError + Ki * -iError + Kd * -dError) + 127);
                                 if (SettingValue > 200)
                                     SettingValue = 200;
                                 else if (SettingValue < 55)
                                     SettingValue = 55;
-
-
                             }
 
                             else
                             {
 
-                                SettingValue = ((Kp / 1000 * -pError + Ki / 1000 * -iError + Kd / 1000 * -dError) + 127);
+                                SettingValue = ((Kp * -pError + Ki * -iError + Kd * -dError) + 127);
 
                                 Debug.WriteLine("SettingValue:");
                                 Debug.WriteLine(SettingValue);
@@ -324,8 +322,6 @@ namespace BluetoothGUISample
                                     SettingValue = 255;
                                 else if (SettingValue < 0)
                                     SettingValue = 0;
-
-                            
                             }
                             controlAction = (byte)SettingValue;
 
@@ -405,11 +401,11 @@ namespace BluetoothGUISample
                     //PositionGraph.ChartAreas[0].AxisY.ScaleView.Zoom(TotalTicks - 30000, TotalTicks + 30000);
                     VelGraph.Series[0].Points.AddXY(time1 / 1000.0, velocitydisplay);
                     //VelGraph.ChartAreas[0].AxisX.ScaleView.Zoom(time1 / 1000.0 - 10, time1 / 1000.0); // -15 <= x <= 2
-                    AccelGraph.Series[0].Points.AddXY(time1 / 1000.0, acceldisplay);
+                    AccelGraph.Series[0].Points.AddXY(time1 / 1000.0, pError);
                     //AccelGraph.ChartAreas[0].AxisX.ScaleView.Zoom(time1 / 1000.0 - 10, time1 / 1000.0); // -15 <= x <= 2
                     if (PositionGraph.Series[0].Points.Count() > 20)
                     {
-                        PositionGraph.Series[0].Points.RemoveAt(0);
+                        //PositionGraph.Series[0].Points.RemoveAt(0);
                         VelGraph.Series[0].Points.RemoveAt(0);
                         AccelGraph.Series[0].Points.RemoveAt(0);
                     }
@@ -585,7 +581,12 @@ namespace BluetoothGUISample
         private void PosButton_Click_1(object sender, EventArgs e)
         {
             if (PosRadio.Checked == true)
+            {
                 posSet = -(int)NextPos.Value;
+                iError = 0;
+                PositionGraph.Series[0].Points.Clear();
+            }
+            
         }
 
         private void VelButton_Click_1(object sender, EventArgs e)
